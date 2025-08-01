@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SANS Kids VibeCoding - AI와 함께하는 어린이 게임 개발 워크샵">
+    <meta name="keywords" content="SANS Kids, VibeCoding, AI 교육, 어린이 코딩, 게임 개발, Cursor AI">
+    <meta name="author" content="Jay Lee, Jinyong Shin, Jiwoong Kim">
+    <title>SANS Kids VibeCoding - AI와 함께하는 어린이 게임 개발 워크샵</title>
+    <style>
+        :root {
+            --primary-color: #ff6b6b;
+            --secondary-color: #4ecdc4;
+            --text-color: #2d3436;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease;
+        }
+
+        header p {
+            font-size: 1.3em;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            padding: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        nav li {
+            margin: 0 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Main Content */
+        main {
+            padding: 60px 0;
+        }
+
+        section {
+            margin-bottom: 80px;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-align: center;
+            color: var(--primary-color);
+        }
+
+        h3 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
+        /* Feature Cards */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        /* Workflow Gallery */
+        .workflow-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .workflow-item {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+
+        .workflow-item:hover {
+            transform: scale(1.02);
+        }
+
+        .workflow-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .workflow-content {
+            padding: 25px;
+        }
+
+        .workflow-badge {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        /* Game Demo Button */
+        .demo-button {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            margin-top: 15px;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .demo-button:hover {
+            background: #e85555;
+            transform: translateY(-2px);
+        }
+
+        /* Age Groups */
+        .age-groups {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .age-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .age-badge {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        /* Code Example */
+        .code-example {
+            background: #2d3436;
+            color: #dfe6e9;
+            padding: 30px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 30px 0;
+        }
+
+        .code-example pre {
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-color);
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 80px;
+        }
+
+        footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav li {
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🎮 SANS Kids VibeCoding</h1>
+            <p>AI와 함께하는 어린이 게임 개발 워크샵</p>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#about">소개</a></li>
+            <li><a href="#features">특징</a></li>
+            <li><a href="#workflows">교육 방식</a></li>
+            <li><a href="#ages">연령별 안내</a></li>
+            <li><a href="#demo">데모</a></li>
+            <li><a href="https://github.com/jayleekr/sans-kids-school-2025" target="_blank">GitHub</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <section id="about">
+            <h2>🌟 SANS Kids가 만드는 새로운 교육</h2>
+            <p style="text-align: center; font-size: 1.2em; margin-bottom: 40px;">
+                전통적인 프로그래밍 지식 대신 <strong>"문제 설정, 분해, AI 관리 능력"</strong>을 기르는<br>
+                혁신적인 게임 개발 교육 프로그램입니다.
+            </p>
+
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">🚫🐛</div>
+                    <h3>디버깅 없는 개발</h3>
+                    <p>에러가 나도 게임은 계속 실행! 좌절 없이 즐겁게 배워요.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>즉각적인 피드백</h3>
+                    <p>저장하면 10초 내 결과 확인. 빠른 피드백으로 몰입도 UP!</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📄</div>
+                    <h3>단일 HTML 파일</h3>
+                    <p>복잡한 설정 NO! 하나의 파일로 모든 것을 만들어요.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI 선생님</h3>
+                    <p>5가지 AI 페르소나가 아이의 학습 스타일에 맞춰 가르쳐요.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="workflows">
+            <h2>🎯 5가지 AI 교육 방식</h2>
+            <p style="text-align: center; font-size: 1.1em; margin-bottom: 40px;">
+                아이의 성향과 연령에 맞는 최적의 학습 방법을 선택하세요
+            </p>
+
+            <div class="workflow-gallery">
+                <div class="workflow-item">
+                    <img src="images/workflows/workflow-1-demo.png" alt="친근한 선생님 데모">
+                    <div class="workflow-content">
+                        <span class="workflow-badge">8-10세 추천</span>
+                        <h3>👨‍🏫 친근한 선생님</h3>
+                        <p>격려와 칭찬으로 자신감을 키워주는 따뜻한 접근법. "잘했어요! 우리 같이 더 멋진 걸 만들어볼까요?"</p>
+                        <a href="workflow-1-banana-hero-game.html" class="demo-button">게임 체험하기</a>
+                    </div>
+                </div>
+
+                <div class="workflow-item">
+                    <img src="images/workflows/workflow-2-demo.png" alt="문제 해결자 데모">
+                    <div class="workflow-content">
+                        <span class="workflow-badge">11-13세 추천</span>
+                        <h3>🔍 문제 해결자</h3>
+                        <p>소크라테스식 문답법으로 스스로 답을 찾도록 유도. "왜 그렇게 생각했니? 다른 방법은 없을까?"</p>
+                        <a href="workflow-2-problem-solver-game.html" class="demo-button">게임 체험하기</a>
+                    </div>
+                </div>
+
+                <div class="workflow-item">
+                    <img src="images/workflows/workflow-3-demo.png" alt="빠른 구현 데모">
+                    <div class="workflow-content">
+                        <span class="workflow-badge">14-16세 추천</span>
+                        <h3>⚡ 빠른 구현</h3>
+                        <p>즉각적인 결과물로 성취감을 주는 실용적 접근. "바로 만들어보자! 5분 안에 완성할 수 있어!"</p>
+                        <a href="workflow-3-quick-implementation.html" class="demo-button">게임 체험하기</a>
+                    </div>
+                </div>
+
+                <div class="workflow-item">
+                    <img src="images/workflows/workflow-4-demo.png" alt="스토리텔링 데모">
+                    <div class="workflow-content">
+                        <span class="workflow-badge">8-10세 추천</span>
+                        <h3>📖 스토리텔링</h3>
+                        <p>이야기와 함께 코드를 배우는 몰입형 학습. "용사가 드래곤을 물리치려면 어떤 능력이 필요할까?"</p>
+                        <a href="workflow-4-storytelling-adventure.html" class="demo-button">게임 체험하기</a>
+                    </div>
+                </div>
+
+                <div class="workflow-item">
+                    <img src="images/workflows/workflow-5-demo.png" alt="체크리스트 데모">
+                    <div class="workflow-content">
+                        <span class="workflow-badge">11-13세 추천</span>
+                        <h3>✅ 체크리스트</h3>
+                        <p>체계적인 단계별 접근으로 복잡한 프로젝트도 완성. "1단계 완료! 다음은 뭘 해볼까?"</p>
+                        <a href="workflow-5-checklist-project.html" class="demo-button">게임 체험하기</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ages">
+            <h2>👶 연령별 맞춤 교육</h2>
+            <div class="age-groups">
+                <div class="age-card">
+                    <span class="age-badge">8-10세</span>
+                    <h3>초등 저학년</h3>
+                    <ul>
+                        <li>🎮 간단한 캐릭터 움직임</li>
+                        <li>🎨 색상과 모양 변경</li>
+                        <li>🔊 소리 효과 추가</li>
+                        <li>📝 기본 HTML 구조 이해</li>
+                    </ul>
+                    <p style="margin-top: 15px;"><strong>추천:</strong> 친근한 선생님, 스토리텔링</p>
+                </div>
+
+                <div class="age-card">
+                    <span class="age-badge">11-13세</span>
+                    <h3>초등 고학년</h3>
+                    <ul>
+                        <li>⚔️ 충돌 감지와 점수 시스템</li>
+                        <li>🎯 게임 로직 설계</li>
+                        <li>🔄 반복문과 조건문 활용</li>
+                        <li>🎮 p5.js 라이브러리 사용</li>
+                    </ul>
+                    <p style="margin-top: 15px;"><strong>추천:</strong> 문제 해결자, 체크리스트</p>
+                </div>
+
+                <div class="age-card">
+                    <span class="age-badge">14-16세</span>
+                    <h3>중학생</h3>
+                    <ul>
+                        <li>🏗️ 복잡한 게임 메카닉</li>
+                        <li>📊 데이터 구조 활용</li>
+                        <li>🎮 멀티 레벨 구현</li>
+                        <li>🚀 성능 최적화</li>
+                    </ul>
+                    <p style="margin-top: 15px;"><strong>추천:</strong> 빠른 구현, 문제 해결자</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="demo">
+            <h2>💻 에러 방지 코드 예시</h2>
+            <p style="text-align: center; margin-bottom: 30px;">
+                SANS Kids만의 특별한 에러 방지 패턴으로 안전하게 코딩해요
+            </p>
+            
+            <div class="code-example">
+                <pre>// 🛡️ 항상 try-catch로 게임 로직을 보호해요
+function safeGameLoop() {
+    try {
+        updateGame();    // 게임 업데이트
+        drawGame();      // 화면 그리기
+    } catch (error) {
+        // 에러가 나도 게임은 계속!
+        showMessage("🔄 다시 시도 중...");
+    }
+    requestAnimationFrame(safeGameLoop);
+}
+
+// 🎯 기본값으로 안전하게
+const hero = hero || { 
+    x: 100, 
+    y: 300, 
+    size: 50,
+    color: '#3498db'
+};
+
+// 💬 시각적 피드백으로 디버깅 대체
+function showMessage(text) {
+    document.getElementById('status').innerText = text;
+}</pre>
+            </div>
+        </section>
+
+        <section style="text-align: center; padding: 60px 0;">
+            <h2>🚀 지금 시작하세요!</h2>
+            <p style="font-size: 1.2em; margin-bottom: 30px;">
+                AI와 함께하는 신나는 게임 개발의 세계로 초대합니다
+            </p>
+            <a href="https://github.com/jayleekr/sans-kids-school-2025" class="demo-button" style="font-size: 1.2em; padding: 15px 40px;">
+                GitHub에서 시작하기
+            </a>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 SANS Kids VibeCoding</p>
+            <p>Contributors: Jay Lee, Jinyong Shin, Jiwoong Kim</p>
+            <p><a href="https://github.com/jayleekr/sans-kids-school-2025">GitHub Repository</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '0';
+                    entry.target.style.transform = 'translateY(30px)';
+                    
+                    setTimeout(() => {
+                        entry.target.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, 100);
+                    
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe all feature cards and workflow items
+        document.querySelectorAll('.feature-card, .workflow-item, .age-card').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
