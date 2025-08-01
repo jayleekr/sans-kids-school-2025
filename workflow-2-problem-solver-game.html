@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>바나나 히어로 - 문제해결 코치와 함께</title>
+    <style>
+        body { 
+            margin: 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            background: #2c3e50;
+            font-family: 'Courier New', monospace;
+            color: white;
+        }
+        #gameContainer {
+            text-align: center;
+        }
+        canvas { 
+            border: 2px solid #3498db; 
+            background: #34495e;
+            border-radius: 5px;
+        }
+        #gameInfo {
+            margin: 10px 0;
+            font-size: 20px;
+            color: #ecf0f1;
+        }
+        #instructions {
+            margin: 15px 0;
+            font-size: 14px;
+            color: #bdc3c7;
+            background: #34495e;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #3498db;
+        }
+        .thinking-prompt {
+            background: #e74c3c;
+            color: white;
+            padding: 8px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .debug-panel {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.8);
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            color: #2ecc71;
+            border: 1px solid #2ecc71;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-panel" id="debugPanel">
+        <div>🧠 문제해결 모드</div>
+        <div>FPS: <span id="fps">0</span></div>
+        <div>Objects: <span id="objectCount">0</span></div>
+        <div>Score Rate: <span id="scoreRate">0</span></div>
+    </div>
+
+    <div id="gameContainer">
+        <div class="thinking-prompt">🤔 어떻게 하면 더 높은 점수를 얻을 수 있을까?</div>
+        <div id="gameInfo">점수: 0 | 생존 시간: 0초</div>
+        <canvas id="gameCanvas" width="800" height="400"></canvas>
+        <div id="instructions">
+            ❓ 질문: 이 게임의 목표가 뭘까? 어떻게 이기는 게임일까?<br>
+            ⌨️ 힌트: 키보드로 뭔가 해보자 (←→ 스페이스 Z)
+        </div>
+        <div class="thinking-prompt" id="currentChallenge">
+            🎯 현재 도전: 화면에 뭔가 나타나게 만들어보자!
+        </div>
+    </div>
+
+    <script>
+        // 🧠 문제해결 코치: 먼저 생각해보자!
+        console.log("🤔 생각해보자: 게임을 만들려면 무엇이 필요할까?");
+        console.log("💡 힌트:");
+        console.log("1. 무엇을 그릴까?");
+        console.log("2. 어떻게 움직일까?");
+        console.log("3. 어떤 규칙이 있을까?");
+        
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const gameInfo = document.getElementById('gameInfo');
+        const challengeDisplay = document.getElementById('currentChallenge');
+        const debugPanel = document.getElementById('debugPanel');
+
+        // 🎯 게임 상태 - 이게 우리가 추적해야 할 정보들이야
+        let gameState = {
+            score: 0,
+            startTime: Date.now(),
+            gameOver: false,
+            challengeLevel: 1,
+            lastFPS: 0,
+            frameCount: 0
+        };
+
+        // 📊 통계 추적 - 코치가 성과를 분석하기 위해
+        let stats = {
+            bananasThrown: 0,
+            enemiesHit: 0,
+            jumps: 0,
+            totalDistance: 0,
+            lastScoreTime: Date.now()
+        };
+
+        // 🐵 플레이어 - 우리의 주인공
+        const player = {
+            x: 100,
+            y: 300,
+            width: 40,
+            height: 40,
+            velocityY: 0,
+            onGround: true,
+            color: '#e67e22',
+            lastX: 100
+        };
+
+        // 🍌 발사체 배열
+        let projectiles = [];
+        
+        // 👾 적들 배열  
+        let enemies = [];
+
+        // 🎮 입력 상태
+        const input = {};
+
+        // 🎯 도전 과제 시스템 - 문제해결 단계별 유도
+        const challenges = [
+            {
+                id: 1,
+                question: "🎯 캐릭터를 화면에서 볼 수 있니? 어떻게 보이는지 설명해봐!",
+                hint: "화면 왼쪽에 주황색 네모가 보이면 성공!",
+                completed: false
+            },
+            {
+                id: 2,
+                question: "🏃 캐릭터가 움직이게 하려면 어떻게 해야 할까?",
+                hint: "화살표 키를 눌러보자. 뭐가 일어나지?",
+                completed: false
+            },
+            {
+                id: 3,
+                question: "🦘 점프는 현실에서 어떻게 작동하지? 올라갔다가 내려오지?",
+                hint: "스페이스바를 눌러보자. 중력이 있는지 확인해봐!",
+                completed: false
+            },
+            {
+                id: 4,
+                question: "🍌 무기를 발사하려면 뭐가 필요할까? 위치? 방향? 속도?",
+                hint: "Z키를 누르면 뭐가 나타나는지 관찰해봐!",
+                completed: false
+            },
+            {
+                id: 5,
+                question: "👾 적이 나타났어! 이들을 어떻게 물리칠 수 있을까?",
+                hint: "바나나와 적이 만나면 뭐가 일어날까?",
+                completed: false
+            }
+        ];
+
+        let currentChallengeIndex = 0;
+
+        // 키보드 이벤트 리스너
+        document.addEventListener('keydown', (e) => {
+            input[e.key] = true;
+            
+            // Z키로 발사체 생성
+            if (e.key === 'z' || e.key === 'Z') {
+                createProjectile();
+            }
+            
+            // R키로 재시작
+            if ((e.key === 'r' || e.key === 'R') && gameState.gameOver) {
+                resetGame();
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            input[e.key] = false;
+        });
+
+        // 🍌 발사체 생성 함수
+        function createProjectile() {
+            projectiles.push({
+                x: player.x + player.width,
+                y: player.y + player.height / 2,
+                width: 15,
+                height: 8,
+                velocityX: 12,
+                color: '#f1c40f'
+            });
+            
+            stats.bananasThrown++;
+            console.log(`🤔 생각해보자: 바나나가 ${stats.bananasThrown}개째 발사됐어. 이 속도면 얼마나 멀리 갈까?`);
+            
+            // 첫 발사체 도전 완료
+            if (!challenges[3].completed) {
+                challenges[3].completed = true;
+                updateCurrentChallenge();
+            }
+        }
+
+        // 👾 적 생성 함수
+        function spawnEnemy() {
+            enemies.push({
+                x: canvas.width,
+                y: 300,
+                width: 35,
+                height: 45,
+                velocityX: -2 - Math.random() * 3,
+                color: '#c0392b',
+                health: 1
+            });
+        }
+
+        // 🎯 도전 과제 업데이트 함수
+        function updateCurrentChallenge() {
+            if (currentChallengeIndex < challenges.length && 
+                challenges[currentChallengeIndex].completed) {
+                currentChallengeIndex++;
+            }
+            
+            if (currentChallengeIndex < challenges.length) {
+                const challenge = challenges[currentChallengeIndex];
+                challengeDisplay.textContent = challenge.question;
+                console.log(`🧠 새로운 도전: ${challenge.question}`);
+                console.log(`💡 힌트: ${challenge.hint}`);
+            } else {
+                challengeDisplay.textContent = "🏆 모든 도전을 완료했어! 이제 어떻게 더 재밌게 만들 수 있을까?";
+            }
+        }
+
+        // 🎯 게임 로직 업데이트
+        function update() {
+            if (gameState.gameOver) return;
+
+            gameState.frameCount++;
+            
+            // 플레이어 이동 처리
+            const prevX = player.x;
+            
+            if (input['ArrowLeft'] && player.x > 0) {
+                player.x -= 5;
+                stats.totalDistance += Math.abs(player.x - prevX);
+                
+                // 첫 이동 도전 완료 체크
+                if (!challenges[1].completed) {
+                    challenges[1].completed = true;
+                    updateCurrentChallenge();
+                    console.log("🎉 잘했어! 캐릭터가 움직였네! 이제 다른 방향도 해볼까?");
+                }
+            }
+            
+            if (input['ArrowRight'] && player.x < canvas.width - player.width) {
+                player.x += 5;
+                stats.totalDistance += Math.abs(player.x - prevX);
+                
+                if (!challenges[1].completed) {
+                    challenges[1].completed = true;
+                    updateCurrentChallenge();
+                }
+            }
+
+            // 점프 처리
+            if (input[' '] && player.onGround) {
+                player.velocityY = -15;
+                player.onGround = false;
+                stats.jumps++;
+                
+                console.log(`🤔 흥미로워! ${stats.jumps}번째 점프야. 얼마나 높이 올라갈까?`);
+                
+                if (!challenges[2].completed) {
+                    challenges[2].completed = true;
+                    updateCurrentChallenge();
+                    console.log("🎉 점프 성공! 중력이 어떻게 작용하는지 관찰해봐!");
+                }
+            }
+
+            // 중력과 물리
+            player.velocityY += 0.8;
+            player.y += player.velocityY;
+
+            // 바닥 충돌
+            if (player.y > 300) {
+                player.y = 300;
+                player.velocityY = 0;
+                player.onGround = true;
+            }
+
+            // 발사체 업데이트
+            projectiles.forEach((proj, index) => {
+                proj.x += proj.velocityX;
+                if (proj.x > canvas.width) {
+                    projectiles.splice(index, 1);
+                }
+            });
+
+            // 적 생성 (5초마다)
+            if (gameState.frameCount % 300 === 0) {
+                spawnEnemy();
+                if (!challenges[4].completed) {
+                    console.log("🤔 적이 나타났어! 이걸 어떻게 처리할까?");
+                }
+            }
+
+            // 적 이동
+            enemies.forEach((enemy, index) => {
+                enemy.x += enemy.velocityX;
+                if (enemy.x < -enemy.width) {
+                    enemies.splice(index, 1);
+                }
+            });
+
+            // 충돌 검사
+            checkCollisions();
+            
+            // 통계 업데이트
+            updateStats();
+            
+            // 캐릭터 첫 표시 도전 완료 체크
+            if (!challenges[0].completed) {
+                challenges[0].completed = true;
+                updateCurrentChallenge();
+                console.log("🎉 훌륭해! 캐릭터가 화면에 나타났어!");
+            }
+        }
+
+        // 💥 충돌 검사
+        function checkCollisions() {
+            // 발사체와 적 충돌
+            projectiles.forEach((proj, pIndex) => {
+                enemies.forEach((enemy, eIndex) => {
+                    if (proj.x < enemy.x + enemy.width &&
+                        proj.x + proj.width > enemy.x &&
+                        proj.y < enemy.y + enemy.height &&
+                        proj.y + proj.height > enemy.y) {
+                        
+                        // 충돌 발생!
+                        projectiles.splice(pIndex, 1);
+                        enemies.splice(eIndex, 1);
+                        gameState.score += 10;
+                        stats.enemiesHit++;
+                        stats.lastScoreTime = Date.now();
+                        
+                        console.log(`🎯 명중! ${stats.enemiesHit}번째 적을 물리쳤어!`);
+                        console.log(`🤔 생각해봐: 명중률이 ${(stats.enemiesHit/stats.bananasThrown*100).toFixed(1)}%야. 어떻게 더 정확하게 할 수 있을까?`);
+                        
+                        if (!challenges[4].completed) {
+                            challenges[4].completed = true;
+                            updateCurrentChallenge();
+                            console.log("🎉 완벽해! 발사체와 적의 충돌을 구현했어!");
+                        }
+                    }
+                });
+            });
+
+            // 플레이어와 적 충돌
+            enemies.forEach(enemy => {
+                if (player.x < enemy.x + enemy.width &&
+                    player.x + player.width > enemy.x &&
+                    player.y < enemy.y + enemy.height &&
+                    player.y + player.height > enemy.y) {
+                    gameState.gameOver = true;
+                    console.log("💭 게임이 끝났어. 왜 끝났을까? 어떻게 더 오래 생존할 수 있을까?");
+                }
+            });
+        }
+
+        // 📊 통계 업데이트
+        function updateStats() {
+            const currentTime = Date.now();
+            const survivalTime = Math.floor((currentTime - gameState.startTime) / 1000);
+            
+            gameInfo.textContent = `점수: ${gameState.score} | 생존: ${survivalTime}초 | 명중률: ${stats.bananasThrown > 0 ? (stats.enemiesHit/stats.bananasThrown*100).toFixed(1) : 0}%`;
+            
+            // FPS 계산
+            if (gameState.frameCount % 60 === 0) {
+                gameState.lastFPS = Math.round(60000 / (Date.now() - gameState.fpsTime));
+                gameState.fpsTime = Date.now();
+            }
+            
+            // 디버그 패널 업데이트
+            document.getElementById('fps').textContent = gameState.lastFPS || 60;
+            document.getElementById('objectCount').textContent = projectiles.length + enemies.length + 1;
+            document.getElementById('scoreRate').textContent = (gameState.score / survivalTime * 60 || 0).toFixed(1) + '/min';
+        }
+
+        // 🎨 렌더링
+        function draw() {
+            // 화면 지우기
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 격자 배경 (디버깅용)
+            ctx.strokeStyle = '#2c3e50';
+            ctx.lineWidth = 1;
+            for (let x = 0; x < canvas.width; x += 50) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, canvas.height);
+                ctx.stroke();
+            }
+            for (let y = 0; y < canvas.height; y += 50) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(canvas.width, y);
+                ctx.stroke();
+            }
+
+            // 바닥
+            ctx.fillStyle = '#27ae60';
+            ctx.fillRect(0, 340, canvas.width, 60);
+
+            // 플레이어
+            ctx.fillStyle = player.color;
+            ctx.fillRect(player.x, player.y, player.width, player.height);
+            
+            // 플레이어 얼굴
+            ctx.fillStyle = '#2c3e50';
+            ctx.fillRect(player.x + 8, player.y + 8, 6, 6);
+            ctx.fillRect(player.x + 20, player.y + 8, 6, 6);
+            ctx.fillRect(player.x + 10, player.y + 20, 15, 4);
+
+            // 발사체들
+            ctx.fillStyle = '#f1c40f';
+            projectiles.forEach(proj => {
+                ctx.fillRect(proj.x, proj.y, proj.width, proj.height);
+                
+                // 발사체 궤적 (시각적 디버깅)
+                ctx.strokeStyle = 'rgba(241, 196, 15, 0.3)';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(proj.x, proj.y + proj.height/2);
+                ctx.lineTo(proj.x - 20, proj.y + proj.height/2);
+                ctx.stroke();
+            });
+
+            // 적들
+            enemies.forEach(enemy => {
+                ctx.fillStyle = enemy.color;
+                ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
+                
+                // 적 얼굴
+                ctx.fillStyle = '#ecf0f1';
+                ctx.fillRect(enemy.x + 5, enemy.y + 8, 4, 4);
+                ctx.fillRect(enemy.x + 15, enemy.y + 8, 4, 4);
+                
+                // 이동 방향 표시 (디버깅)
+                ctx.strokeStyle = 'rgba(192, 57, 43, 0.5)';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(enemy.x, enemy.y + enemy.height/2);
+                ctx.lineTo(enemy.x - 30, enemy.y + enemy.height/2);
+                ctx.stroke();
+            });
+
+            // 게임 오버 화면
+            if (gameState.gameOver) {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.fillStyle = '#ecf0f1';
+                ctx.font = '36px Courier New';
+                ctx.textAlign = 'center';
+                ctx.fillText('게임 분석 완료', canvas.width/2, canvas.height/2 - 60);
+                
+                ctx.font = '18px Courier New';
+                ctx.fillText(`최종 점수: ${gameState.score}`, canvas.width/2, canvas.height/2 - 20);
+                ctx.fillText(`생존 시간: ${Math.floor((Date.now() - gameState.startTime)/1000)}초`, canvas.width/2, canvas.height/2);
+                ctx.fillText(`명중률: ${stats.bananasThrown > 0 ? (stats.enemiesHit/stats.bananasThrown*100).toFixed(1) : 0}%`, canvas.width/2, canvas.height/2 + 20);
+                
+                ctx.font = '14px Courier New';
+                ctx.fillStyle = '#3498db';
+                ctx.fillText('🤔 어떻게 더 좋은 성과를 낼 수 있을까?', canvas.width/2, canvas.height/2 + 50);
+                ctx.fillText('R키를 눌러 다시 분석해보자!', canvas.width/2, canvas.height/2 + 70);
+                
+                ctx.textAlign = 'left';
+            }
+        }
+
+        // 🔄 게임 리셋
+        function resetGame() {
+            gameState = {
+                score: 0,
+                startTime: Date.now(),
+                gameOver: false,
+                challengeLevel: 1,
+                lastFPS: 0,
+                frameCount: 0,
+                fpsTime: Date.now()
+            };
+            
+            stats = {
+                bananasThrown: 0,
+                enemiesHit: 0,
+                jumps: 0,
+                totalDistance: 0,
+                lastScoreTime: Date.now()
+            };
+            
+            player.x = 100;
+            player.y = 300;
+            player.velocityY = 0;
+            player.onGround = true;
+            
+            projectiles = [];
+            enemies = [];
+            
+            // 도전 과제 리셋
+            challenges.forEach(challenge => challenge.completed = false);
+            currentChallengeIndex = 0;
+            updateCurrentChallenge();
+            
+            console.log("🔄 새로운 분석 시작! 이번에는 어떤 전략을 써볼까?");
+        }
+
+        // 🎮 게임 루프
+        function gameLoop() {
+            update();
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+
+        // 🚀 게임 시작
+        console.log("🧠 문제해결 코치와 함께하는 바나나 히어로!");
+        console.log("🎯 목표: 스스로 생각하고 발견하며 게임을 이해하기");
+        console.log("🤔 첫 번째 질문: 화면에 뭐가 보이니?");
+        
+        gameState.fpsTime = Date.now();
+        updateCurrentChallenge();
+        gameLoop();
+    </script>
+</body>
+</html>

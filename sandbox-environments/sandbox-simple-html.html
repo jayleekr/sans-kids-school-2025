@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>바나나 히어로의 모험 - Simple</title>
+    <style>
+        body { 
+            margin: 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            background: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        #gameContainer {
+            text-align: center;
+        }
+        canvas { 
+            border: 2px solid #333; 
+            background: #87CEEB;
+            display: block;
+            margin: 0 auto;
+        }
+        #instructions {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #555;
+        }
+        #score {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <div id="score">점수: 0</div>
+        <canvas id="gameCanvas" width="800" height="400"></canvas>
+        <div id="instructions">
+            ← → 이동 | 스페이스: 점프 | Z: 바나나 던지기 | R: 재시작
+        </div>
+    </div>
+
+    <script>
+        // 🎮 게임 기본 설정
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreDisplay = document.getElementById('score');
+
+        // 🎯 게임 상태
+        let gameState = {
+            score: 0,
+            gameOver: false,
+            frameCount: 0
+        };
+
+        // 🐵 주인공
+        const hero = {
+            x: 100,
+            y: 300,
+            width: 50,
+            height: 50,
+            velocityY: 0,
+            isJumping: false,
+            color: '#8B4513'
+        };
+
+        // 🍌 바나나들
+        let bananas = [];
+
+        // 👹 적들
+        let enemies = [];
+
+        // ⌨️ 키보드 상태
+        const keys = {};
+
+        // 키보드 이벤트
+        document.addEventListener('keydown', (e) => {
+            keys[e.key] = true;
+            
+            // Z키: 바나나 던지기
+            if ((e.key === 'z' || e.key === 'Z') && !gameState.gameOver) {
+                throwBanana();
+            }
+            
+            // R키: 재시작
+            if ((e.key === 'r' || e.key === 'R') && gameState.gameOver) {
+                resetGame();
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            keys[e.key] = false;
+        });
+
+        // 🍌 바나나 던지기
+        function throwBanana() {
+            bananas.push({
+                x: hero.x + hero.width,
+                y: hero.y + hero.height / 2,
+                width: 20,
+                height: 10,
+                speed: 10,
+                color: '#FFFF00'
+            });
+            console.log("바나나 발사! 🍌");
+        }
+
+        // 👹 적 생성
+        function spawnEnemy() {
+            enemies.push({
+                x: canvas.width,
+                y: 300,
+                width: 40,
+                height: 50,
+                speed: -3,
+                color: '#FF0000',
+                isSlipping: false
+            });
+        }
+
+        // 🎯 게임 업데이트
+        function update() {
+            if (gameState.gameOver) return;
+
+            gameState.frameCount++;
+
+            // 주인공 이동
+            if (keys['ArrowLeft'] && hero.x > 0) {
+                hero.x -= 5;
+            }
+            if (keys['ArrowRight'] && hero.x < canvas.width - hero.width) {
+                hero.x += 5;
+            }
+
+            // 점프
+            if (keys[' '] && !hero.isJumping) {
+                hero.velocityY = -15;
+                hero.isJumping = true;
+            }
+
+            // 중력
+            hero.velocityY += 0.8;
+            hero.y += hero.velocityY;
+
+            // 바닥 체크
+            if (hero.y > 300) {
+                hero.y = 300;
+                hero.velocityY = 0;
+                hero.isJumping = false;
+            }
+
+            // 바나나 이동
+            bananas.forEach((banana, index) => {
+                banana.x += banana.speed;
+                if (banana.x > canvas.width) {
+                    bananas.splice(index, 1);
+                }
+            });
+
+            // 적 생성 (3초마다)
+            if (gameState.frameCount % 180 === 0) {
+                spawnEnemy();
+            }
+
+            // 적 이동
+            enemies.forEach((enemy, index) => {
+                if (enemy.isSlipping) {
+                    enemy.x += 5;
+                } else {
+                    enemy.x += enemy.speed;
+                }
+
+                if (enemy.x < -enemy.width || enemy.x > canvas.width) {
+                    enemies.splice(index, 1);
+                }
+            });
+
+            // 충돌 체크
+            checkCollisions();
+        }
+
+        // 💥 충돌 체크
+        function checkCollisions() {
+            // 바나나와 적 충돌
+            bananas.forEach((banana, bIndex) => {
+                enemies.forEach((enemy, eIndex) => {
+                    if (banana.x < enemy.x + enemy.width &&
+                        banana.x + banana.width > enemy.x &&
+                        banana.y < enemy.y + enemy.height &&
+                        banana.y + banana.height > enemy.y &&
+                        !enemy.isSlipping) {
+                        
+                        enemy.isSlipping = true;
+                        enemy.color = '#FFA500';
+                        bananas.splice(bIndex, 1);
+                        gameState.score += 10;
+                        scoreDisplay.textContent = `점수: ${gameState.score}`;
+                        
+                        setTimeout(() => {
+                            const index = enemies.indexOf(enemy);
+                            if (index > -1) enemies.splice(index, 1);
+                        }, 1000);
+                    }
+                });
+            });
+
+            // 주인공과 적 충돌
+            enemies.forEach(enemy => {
+                if (!enemy.isSlipping &&
+                    hero.x < enemy.x + enemy.width &&
+                    hero.x + hero.width > enemy.x &&
+                    hero.y < enemy.y + enemy.height &&
+                    hero.y + hero.height > enemy.y) {
+                    gameState.gameOver = true;
+                }
+            });
+        }
+
+        // 🎨 그리기
+        function draw() {
+            // 화면 지우기
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 땅 그리기
+            ctx.fillStyle = '#8FBC8F';
+            ctx.fillRect(0, 350, canvas.width, 50);
+
+            // 주인공 그리기
+            ctx.fillStyle = hero.color;
+            ctx.fillRect(hero.x, hero.y, hero.width, hero.height);
+            
+            // 얼굴
+            ctx.fillStyle = '#FFD700';
+            ctx.beginPath();
+            ctx.arc(hero.x + 25, hero.y + 20, 15, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // 눈
+            ctx.fillStyle = 'black';
+            ctx.beginPath();
+            ctx.arc(hero.x + 20, hero.y + 15, 3, 0, Math.PI * 2);
+            ctx.arc(hero.x + 30, hero.y + 15, 3, 0, Math.PI * 2);
+            ctx.fill();
+
+            // 바나나 그리기
+            ctx.fillStyle = '#FFFF00';
+            bananas.forEach(banana => {
+                ctx.fillRect(banana.x, banana.y, banana.width, banana.height);
+            });
+
+            // 적 그리기
+            enemies.forEach(enemy => {
+                ctx.fillStyle = enemy.color;
+                ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
+            });
+
+            // 게임 오버 메시지
+            if (gameState.gameOver) {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.fillStyle = 'white';
+                ctx.font = '48px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('GAME OVER', canvas.width / 2, canvas.height / 2);
+                
+                ctx.font = '24px Arial';
+                ctx.fillText('R키를 눌러 재시작', canvas.width / 2, canvas.height / 2 + 50);
+            }
+        }
+
+        // 🔄 게임 리셋
+        function resetGame() {
+            gameState = {
+                score: 0,
+                gameOver: false,
+                frameCount: 0
+            };
+            hero.x = 100;
+            hero.y = 300;
+            hero.velocityY = 0;
+            hero.isJumping = false;
+            bananas = [];
+            enemies = [];
+            scoreDisplay.textContent = '점수: 0';
+        }
+
+        // 🎮 게임 루프
+        function gameLoop() {
+            update();
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+
+        // 시작!
+        gameLoop();
+        console.log("게임이 시작되었습니다! 🎮");
+    </script>
+</body>
+</html>
