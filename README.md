@@ -135,26 +135,15 @@ function showMessage(text) {
 - 복잡한 프레임워크 (React, Vue 등)
 - 데이터베이스 연결
 
-## 👥 기여하기
-
-워크샵 개선 아이디어나 새로운 게임 템플릿을 환영합니다! 
-
-1. Fork this repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
 ## 📄 라이선스
 
 이 프로젝트는 SANS Kids 교육 프로그램의 일부로, 교육 목적으로 자유롭게 사용할 수 있습니다.
 
-## 🙏 감사의 말
+## 👥 Contributors
 
-- SANS Kids 팀: 혁신적인 교육 프로그램 개발
-- Cursor AI 팀: 어린이 친화적인 AI 도구 제공
-- 워크샵 테스터 어린이들: 소중한 피드백
-- 교육자 커뮤니티: 지속적인 개선 제안
+- Jay Lee
+- Jinyong Shin
+- Jiwoong Kim
 
 ---
 
