@@ -69,6 +69,28 @@ chmod +x workshop-materials/setup-automation/setup-mac.sh
 └── evaluation/                  # 평가 기준
 ```
 
+## 🎮 게임 데모 화면
+
+### Workflow 1: 친근한 선생님 - 바나나 히어로
+![Workflow 1 Demo](images/workflows/workflow-1-demo.png)
+*격려와 칭찬으로 아이들의 자신감을 키우는 접근법*
+
+### Workflow 2: 문제 해결자 - 탐험가의 모험
+![Workflow 2 Demo](images/workflows/workflow-2-demo.png)
+*소크라테스식 문답법으로 스스로 해결책을 찾도록 유도*
+
+### Workflow 3: 빠른 구현 - 액션 게임
+![Workflow 3 Demo](images/workflows/workflow-3-demo.png)
+*즉각적인 결과물을 통한 성취감 중심 접근*
+
+### Workflow 4: 스토리텔링 - 모험 이야기
+![Workflow 4 Demo](images/workflows/workflow-4-demo.png)
+*이야기와 함께 코드를 배우는 몰입형 학습*
+
+### Workflow 5: 체크리스트 - 프로젝트 관리
+![Workflow 5 Demo](images/workflows/workflow-5-demo.png)
+*체계적인 단계별 접근으로 복잡한 프로젝트 완성*
+
 ## 🎯 표준 테스트 게임: "바나나 히어로의 모험"
 
 모든 워크플로우를 테스트하는 기본 게임:
