@@ -42,3 +42,7 @@ desktop.ini
 node_modules/
 package.json
 package-lock.json
+
+# Old code examples
+*-code-example.html
+*-debug-*.md

@@ -45,10 +45,9 @@ chmod +x workshop-materials/setup-automation/setup-mac.sh
 
 ### 2. 게임 개발 시작
 
-1. **템플릿 선택**:
-   - 초급 (8-10세): `sandbox-environments/sandbox-simple-html.html`
-   - 중급 (11-13세): `sandbox-environments/sandbox-p5js-template.html`
-   - 고급 (14-16세): `sandbox-environments/sandbox-mini-engine.html`
+1. **시작 템플릿**: `sandbox-environments/game-template-starter.html`
+   - 모든 연령대가 동일한 템플릿으로 시작
+   - AI와의 대화를 통해 복잡도 조절
 
 2. **실행 방법**:
    - 방법 1: HTML 파일 우클릭 → "Open with Live Server"
