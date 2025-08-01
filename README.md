@@ -10,7 +10,9 @@
 
 ## 🎮 프로젝트 소개
 
-SANS Kids VibeCoding은 SANS Kids에서 개발한 AI 협업 게임 개발 교육 프로그램입니다. 8-16세 어린이들이 AI(Cursor)와 함께 게임을 만들며, 전통적인 프로그래밍 지식 대신 **"문제 설정, 분해, AI 관리 능력"** 을 기릅니다.
+SANS Kids VibeCoding은 SANS Kids에서 개발한 AI 협업 게임 개발 교육 프로그램입니다. 8-16세 어린이들이 AI(Cursor)와 함께 게임을 만들며, **코딩을 배우지 않고도** 자신만의 게임을 만들 수 있습니다. 
+
+**핵심 가치**: 코드를 작성하는 것이 아니라 **"문제 설정, 분해, AI 관리 능력"** 을 기릅니다.
 
 ### 🌟 핵심 특징
 
@@ -100,28 +102,23 @@ chmod +x workshop-materials/setup-automation/setup-mac.sh
 - 점수 시스템
 - 간단한 물리 엔진 (점프, 중력)
 
-## 🛡️ 에러 방지 패턴
+## 🤖 AI와 함께하는 게임 개발
 
-```javascript
-// 항상 try-catch로 게임 로직 감싸기
-function safeGameLoop() {
-    try {
-        updateGame();
-        drawGame();
-    } catch (e) {
-        showMessage("🔄 다시 시도 중...");
-    }
-    requestAnimationFrame(safeGameLoop);
-}
+VibeCoding의 핵심은 **코딩을 배우는 것이 아니라 AI와 협업하는 방법을 배우는 것**입니다.
 
-// 모든 곳에 기본값 사용
-const hero = hero || { x: 100, y: 300, size: 50 };
+### 아이들이 배우는 것:
+- 🎯 **문제 정의하기**: "바나나를 던지는 원숭이 게임을 만들고 싶어"
+- 🧩 **문제 분해하기**: "원숭이가 움직여야 하고, 바나나를 던질 수 있어야 해"
+- 🤝 **AI와 소통하기**: "원숭이가 더 빨리 움직이게 해줘"
+- 🔄 **반복 개선하기**: "점수가 화면에 크게 보이면 좋겠어"
 
-// console.log 대신 시각적 피드백
-function showMessage(text) {
-    document.getElementById('status').innerText = text;
-}
-```
+### 아이들이 배우지 않아도 되는 것:
+- ❌ HTML/CSS/JavaScript 문법
+- ❌ 프로그래밍 구조
+- ❌ 디버깅 방법
+- ❌ 코드 작성
+
+**대신 아이들은 자신의 아이디어를 AI에게 전달하고, 원하는 결과를 얻는 방법을 익힙니다.**
 
 ## 📈 성공 지표
 
