@@ -1,6 +1,7 @@
-# VibeCoding: AI와 함께하는 어린이 게임 개발 워크샵
+# SANS Kids VibeCoding: AI와 함께하는 어린이 게임 개발 워크샵
 
 <p align="center">
+  <img src="https://img.shields.io/badge/SANS_Kids-VibeCoding-ff6b6b.svg" alt="SANS Kids">
   <img src="https://img.shields.io/badge/Ages-8--16-brightgreen.svg" alt="Ages 8-16">
   <img src="https://img.shields.io/badge/Tool-Cursor_AI-blue.svg" alt="Cursor AI">
   <img src="https://img.shields.io/badge/Language-Korean-orange.svg" alt="Korean">
@@ -9,7 +10,7 @@
 
 ## 🎮 프로젝트 소개
 
-VibeCoding은 8-16세 어린이들이 AI(Cursor)와 협업하여 게임을 만드는 교육 워크샵입니다. 전통적인 프로그래밍 지식 대신 **"문제 설정, 분해, AI 관리 능력"** 을 기릅니다.
+SANS Kids VibeCoding은 SANS Kids에서 개발한 AI 협업 게임 개발 교육 프로그램입니다. 8-16세 어린이들이 AI(Cursor)와 함께 게임을 만들며, 전통적인 프로그래밍 지식 대신 **"문제 설정, 분해, AI 관리 능력"** 을 기릅니다.
 
 ### 🌟 핵심 특징
 
@@ -146,10 +147,11 @@ function showMessage(text) {
 
 ## 📄 라이선스
 
-이 프로젝트는 교육 목적으로 자유롭게 사용할 수 있습니다.
+이 프로젝트는 SANS Kids 교육 프로그램의 일부로, 교육 목적으로 자유롭게 사용할 수 있습니다.
 
 ## 🙏 감사의 말
 
+- SANS Kids 팀: 혁신적인 교육 프로그램 개발
 - Cursor AI 팀: 어린이 친화적인 AI 도구 제공
 - 워크샵 테스터 어린이들: 소중한 피드백
 - 교육자 커뮤니티: 지속적인 개선 제안
@@ -157,5 +159,5 @@ function showMessage(text) {
 ---
 
 <p align="center">
-  <strong>🎮 즐거운 게임 만들기! Happy Coding with AI! 🤖</strong>
+  <strong>🎮 SANS Kids와 함께하는 즐거운 게임 만들기! Happy Coding with AI! 🤖</strong>
 </p>
