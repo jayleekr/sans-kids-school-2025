@@ -34,7 +34,7 @@ SANS Kids VibeCoding은 SANS Kids에서 개발한 AI 협업 게임 개발 교육
 #### Windows (PowerShell)
 ```powershell
 # 복사해서 PowerShell에 붙여넣기
-powershell -NoProfile -Command "& { $w=\"$env:USERPROFILE\Desktop\VibeCoding\"; Write-Host '🎮 VibeCoding 설정 시작...' -ForegroundColor Cyan; New-Item -Path $w -ItemType Directory -Force | Out-Null; Set-Location $w; Write-Host '✅ 폴더 생성 완료!' -ForegroundColor Green; Write-Host \"📁 Cursor에서 이 폴더를 여세요: $w\" -ForegroundColor Yellow; Start-Process explorer.exe $w }"
+$w="$env:USERPROFILE\Desktop\VibeCoding"; Write-Host "VibeCoding 설정 시작..." -ForegroundColor Cyan; New-Item -Path $w -ItemType Directory -Force | Out-Null; Set-Location $w; Write-Host "폴더 생성 완료!" -ForegroundColor Green; Write-Host "Cursor에서 이 폴더를 여세요: $w" -ForegroundColor Yellow; Start-Process explorer.exe $w
 ```
 
 #### Mac/Linux (Terminal)

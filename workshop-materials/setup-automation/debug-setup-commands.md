@@ -123,7 +123,7 @@ try {
 
 ```powershell
 # 안전한 one-line 명령어 (복사해서 사용)
-powershell -NoProfile -Command "& { $ErrorActionPreference='Stop'; try { $w='%USERPROFILE%\Desktop\VibeCoding'; New-Item -Path $w -ItemType Directory -Force -EA SilentlyContinue; Set-Location $w; New-Item -Path '.cursor' -ItemType Directory -Force -EA SilentlyContinue; '{\"mcpServers\":{\"playwright\":{\"command\":\"npx\",\"args\":[\"@playwright/mcp@latest\"]}}}' | Out-File -FilePath '.cursor\mcp.json' -Encoding UTF8 -Force; Write-Host 'OK: VibeCoding setup complete at' $w -ForegroundColor Green } catch { Write-Host 'ERROR:' $_.Exception.Message -ForegroundColor Red } }"
+$w="$env:USERPROFILE\Desktop\VibeCoding"; try { New-Item -Path $w -ItemType Directory -Force -EA Stop | Out-Null; Write-Host "OK: VibeCoding 폴더 생성 완료 - $w" -ForegroundColor Green; Start-Process explorer.exe $w } catch { Write-Host "ERROR: $_" -ForegroundColor Red }
 ```
 
 ### 5단계: 게임 템플릿 생성 (디버그 버전)
