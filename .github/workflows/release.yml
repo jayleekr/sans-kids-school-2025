@@ -1,0 +1,136 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Create Release Directory
+      run: |
+        VERSION=${GITHUB_REF#refs/tags/}
+        if [ -z "$VERSION" ]; then VERSION="v1.0.0"; fi
+        RELEASE_NAME="VibeCoding-${VERSION}"
+        
+        # Create release directory
+        mkdir -p release/${RELEASE_NAME}
+        
+        # Copy files
+        cp README.md release/${RELEASE_NAME}/
+        cp ai-rules-generator.html release/${RELEASE_NAME}/
+        cp index.html release/${RELEASE_NAME}/
+        cp .cursorrules release/${RELEASE_NAME}/
+        cp -r workshop-materials release/${RELEASE_NAME}/
+        cp -r sandbox-environments release/${RELEASE_NAME}/
+        cp -r workflows release/${RELEASE_NAME}/
+        cp -r examples release/${RELEASE_NAME}/
+        cp -r evaluation release/${RELEASE_NAME}/
+        
+        # Create start scripts
+        cat > release/${RELEASE_NAME}/start-workshop.bat << 'EOF'
+        @echo off
+        chcp 65001 >nul
+        echo.
+        echo =====================================================
+        echo    🎮 VibeCoding 워크샵 시작
+        echo =====================================================
+        echo.
+        start "" "%~dp0index.html"
+        timeout /t 2 >nul
+        start "" "%~dp0ai-rules-generator.html"
+        echo.
+        echo ✅ 워크샵 준비 완료!
+        echo.
+        pause
+        EOF
+        
+        cat > release/${RELEASE_NAME}/start-workshop.sh << 'EOF'
+        #!/bin/bash
+        echo "🎮 VibeCoding 워크샵 시작"
+        open "$(dirname "$0")/index.html"
+        sleep 2
+        open "$(dirname "$0")/ai-rules-generator.html"
+        echo "✅ 워크샵 준비 완료!"
+        read -p "아무 키나 누르세요..."
+        EOF
+        
+        chmod +x release/${RELEASE_NAME}/start-workshop.sh
+        
+        # Create QUICK-START.md
+        cat > release/${RELEASE_NAME}/QUICK-START.md << 'EOF'
+        # 🎮 VibeCoding 빠른 시작 가이드
+        
+        ## 🚀 Git 없이 바로 시작하기!
+        
+        ### Windows 사용자
+        1. `start-workshop.bat` 더블클릭
+        2. 브라우저에서 자동으로 페이지가 열립니다
+        3. AI 룰을 생성하고 Cursor에 복사하세요
+        
+        ### Mac 사용자
+        1. `start-workshop.sh` 더블클릭
+        2. 브라우저에서 자동으로 페이지가 열립니다
+        3. AI 룰을 생성하고 Cursor에 복사하세요
+        
+        ## 🎯 필요한 것
+        - Cursor (https://cursor.com)
+        - 웹 브라우저
+        - 그게 다예요! Git은 필요 없어요!
+        
+        즐거운 게임 만들기! 🌟
+        EOF
+        
+        # Create ZIP
+        cd release
+        zip -r ${RELEASE_NAME}.zip ${RELEASE_NAME}/
+        echo "RELEASE_NAME=${RELEASE_NAME}" >> $GITHUB_ENV
+        echo "RELEASE_FILE=${RELEASE_NAME}.zip" >> $GITHUB_ENV
+    
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: VibeCoding ${{ github.ref }}
+        body: |
+          # VibeCoding Release
+          
+          ## 🎮 아이들과 함께하는 AI 게임 개발 워크샵
+          
+          ### 📦 이 릴리즈에 포함된 내용
+          - ✅ 모든 게임 템플릿과 예제
+          - ✅ AI 룰 생성기
+          - ✅ 5가지 교육 워크플로우
+          - ✅ 워크샵 진행 가이드
+          - ✅ Windows/Mac 시작 스크립트
+          
+          ### 🚀 사용 방법
+          1. 아래 ZIP 파일 다운로드
+          2. 압축 해제
+          3. `start-workshop.bat` (Windows) 또는 `start-workshop.sh` (Mac) 실행
+          4. Cursor 설치 후 폴더 열기
+          
+          ### 💡 Git 설치 불필요!
+          이 릴리즈는 Git 없이도 완벽하게 작동합니다.
+          
+        draft: false
+        prerelease: false
+    
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./release/${{ env.RELEASE_FILE }}
+        asset_name: ${{ env.RELEASE_FILE }}
+        asset_content_type: application/zip

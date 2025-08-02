@@ -46,3 +46,6 @@ package-lock.json
 # Old code examples
 *-code-example.html
 *-debug-*.md
+
+# Release build directory
+release/
