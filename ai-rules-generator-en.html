@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibeCoding AI Rules Generator - Custom AI Teacher for Your Child</title>
+    <style>
+        body { 
+            font-family: 'Arial', 'Helvetica', sans-serif; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 20px;
+            background: #f0f8ff;
+            line-height: 1.6;
+        }
+
+        /* Language Switcher */
+        .lang-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .lang-switcher a {
+            display: inline-block;
+            padding: 8px 16px;
+            background: white;
+            color: #2196f3;
+            text-decoration: none;
+            border-radius: 20px;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .lang-switcher a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+        .question {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: 500;
+        }
+        .option {
+            padding: 15px 20px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .option:hover {
+            background: #e3f2fd;
+            border-color: #2196f3;
+            transform: translateY(-2px);
+        }
+        .option.selected {
+            background: #bbdefb;
+            border-color: #1976d2;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .emoji {
+            font-size: 24px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background: #45a049;
+            transform: scale(1.05);
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: scale(1);
+        }
+        #result {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            white-space: pre-wrap;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+            display: none;
+            position: relative;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #2196f3;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        .copy-button:hover {
+            background: #1976d2;
+        }
+        .copy-success {
+            background: #4caf50;
+        }
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .info-box h3 {
+            margin-top: 0;
+            color: #1976d2;
+        }
+    </style>
+</head>
+<body>
+    <div class="lang-switcher">
+        <a href="ai-rules-generator.html">🇰🇷 한국어</a>
+    </div>
+
+    <div class="card">
+        <h1>🎯 VibeCoding AI Rules Generator</h1>
+        <p class="subtitle">Create the perfect AI teacher for your child in 1 minute!</p>
+        
+        <div class="info-box">
+            <h3>💡 How to use:</h3>
+            <p>1. Answer 4 simple questions about your child<br>
+            2. Click "Create AI Rules"<br>
+            3. Copy the generated text<br>
+            4. Paste into Cursor's `.cursorrules` file</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="question">1. How does your child react to new challenges? 🎮</div>
+        <div class="option" data-question="personality" data-value="timid">
+            <span class="emoji">😊</span>
+            <span><strong>Needs encouragement</strong> - Fears failure and needs lots of support</span>
+        </div>
+        <div class="option" data-question="personality" data-value="curious">
+            <span class="emoji">🤔</span>
+            <span><strong>Curious explorer</strong> - Asks "why?" and wants to understand everything</span>
+        </div>
+        <div class="option" data-question="personality" data-value="confident">
+            <span class="emoji">🚀</span>
+            <span><strong>Confident challenger</strong> - Enjoys challenges and tries new things boldly</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="question">2. What motivates your child most? 🏆</div>
+        <div class="option" data-question="motivation" data-value="praise">
+            <span class="emoji">⭐</span>
+            <span><strong>Praise and recognition</strong> - Thrives on positive feedback</span>
+        </div>
+        <div class="option" data-question="motivation" data-value="results">
+            <span class="emoji">🎯</span>
+            <span><strong>Quick results</strong> - Wants to see immediate outcomes</span>
+        </div>
+        <div class="option" data-question="motivation" data-value="creativity">
+            <span class="emoji">🎨</span>
+            <span><strong>Creative expression</strong> - Enjoys making unique things</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="question">3. Preferred learning style? 📚</div>
+        <div class="option" data-question="learning" data-value="step-by-step">
+            <span class="emoji">📋</span>
+            <span><strong>Step by step</strong> - Prefers clear, ordered instructions</span>
+        </div>
+        <div class="option" data-question="learning" data-value="exploratory">
+            <span class="emoji">🔍</span>
+            <span><strong>Exploratory</strong> - Learns by trying and experimenting</span>
+        </div>
+        <div class="option" data-question="learning" data-value="story-based">
+            <span class="emoji">📖</span>
+            <span><strong>Story-based</strong> - Understands better through stories and examples</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="question">4. Your child's age group? 👶</div>
+        <div class="option" data-question="age" data-value="8-10">
+            <span class="emoji">🧒</span>
+            <span><strong>8-10 years</strong> - Elementary lower grades</span>
+        </div>
+        <div class="option" data-question="age" data-value="11-13">
+            <span class="emoji">👦</span>
+            <span><strong>11-13 years</strong> - Elementary upper grades</span>
+        </div>
+        <div class="option" data-question="age" data-value="14-16">
+            <span class="emoji">🧑</span>
+            <span><strong>14-16 years</strong> - Middle school</span>
+        </div>
+    </div>
+
+    <button onclick="generateRules()" id="generateButton">🎯 Create AI Rules</button>
+
+    <div id="result">
+        <button class="copy-button" onclick="copyToClipboard()">📋 Copy</button>
+        <div id="rulesContent"></div>
+    </div>
+
+    <script>
+        const selections = {};
+        
+        // English AI rule templates
+        const templates = {
+            personality: {
+                timid: {
+                    intro: "You are a warm and encouraging AI teacher who builds confidence.",
+                    rules: [
+                        "Always start with praise: 'Great job! You're doing amazing!'",
+                        "Use positive language: 'Let's try...' instead of 'You should...'",
+                        "Celebrate every small success with enthusiasm",
+                        "If errors occur, say: 'No worries! This happens to everyone. Let's fix it together!'",
+                        "Provide lots of encouragement emojis: 🌟 ⭐ 🎉 👏"
+                    ]
+                },
+                curious: {
+                    intro: "You are a thoughtful AI teacher who encourages exploration and understanding.",
+                    rules: [
+                        "Answer 'why' questions with simple, interesting explanations",
+                        "Use Socratic method: 'What do you think will happen if...?'",
+                        "Encourage experimentation: 'Let's test your idea!'",
+                        "Explain cause and effect relationships clearly",
+                        "Foster curiosity: 'That's a great question! Let's explore...'"
+                    ]
+                },
+                confident: {
+                    intro: "You are a dynamic AI teacher who provides exciting challenges.",
+                    rules: [
+                        "Offer challenging tasks: 'Ready for something cool?'",
+                        "Suggest advanced features quickly",
+                        "Use competitive elements: 'Can you beat the high score?'",
+                        "Encourage innovation: 'What unique feature can we add?'",
+                        "Celebrate bold attempts: 'Wow, that's creative!'"
+                    ]
+                }
+            },
+            motivation: {
+                praise: {
+                    rules: [
+                        "Give specific praise: 'Your color choice is fantastic!'",
+                        "Use achievement badges: '🏆 Movement Master unlocked!'",
+                        "Create a positive atmosphere with encouraging messages",
+                        "Highlight improvements: 'You're getting better and better!'"
+                    ]
+                },
+                results: {
+                    rules: [
+                        "Provide working code immediately",
+                        "Show visual results within 30 seconds",
+                        "Focus on quick wins: 'In 5 minutes, you'll have...'",
+                        "Minimize explanations, maximize action"
+                    ]
+                },
+                creativity: {
+                    rules: [
+                        "Encourage unique ideas: 'What special touch can we add?'",
+                        "Suggest creative features: 'How about rainbow effects?'",
+                        "Support artistic expression in game design",
+                        "Ask open-ended questions: 'What would make this more fun?'"
+                    ]
+                }
+            },
+            learning: {
+                "step-by-step": {
+                    rules: [
+                        "Break tasks into numbered steps",
+                        "Use checklists: '✅ Step 1 complete!'",
+                        "Provide clear structure: 'First... Then... Finally...'",
+                        "Show progress: '2 of 5 steps done!'"
+                    ]
+                },
+                exploratory: {
+                    rules: [
+                        "Encourage experimentation: 'Try changing this value!'",
+                        "Ask 'What if...?' questions",
+                        "Let them discover solutions through guided exploration",
+                        "Celebrate discoveries: 'You found it!'"
+                    ]
+                },
+                "story-based": {
+                    rules: [
+                        "Use storytelling: 'Our hero needs to jump over obstacles...'",
+                        "Create narratives around coding concepts",
+                        "Use character-based explanations",
+                        "Make code tell a story"
+                    ]
+                }
+            },
+            age: {
+                "8-10": {
+                    rules: [
+                        "Use simple, everyday language",
+                        "Lots of fun emojis and visual elements",
+                        "Short sentences and clear instructions",
+                        "Focus on immediate visual feedback"
+                    ]
+                },
+                "11-13": {
+                    rules: [
+                        "Introduce basic gaming concepts",
+                        "Encourage logical thinking",
+                        "Balance fun with learning",
+                        "Introduce simple problem-solving"
+                    ]
+                },
+                "14-16": {
+                    rules: [
+                        "Discuss more complex game mechanics",
+                        "Encourage system thinking",
+                        "Support ambitious projects",
+                        "Introduce optimization concepts"
+                    ]
+                }
+            }
+        };
+
+        // Handle option selection
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                const question = this.dataset.question;
+                const value = this.dataset.value;
+                
+                // Remove selected class from siblings
+                document.querySelectorAll(`[data-question="${question}"]`).forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                // Add selected class to clicked option
+                this.classList.add('selected');
+                
+                // Store selection
+                selections[question] = value;
+                
+                // Enable generate button if all selected
+                if (Object.keys(selections).length === 4) {
+                    document.getElementById('generateButton').disabled = false;
+                }
+            });
+        });
+
+        function generateRules() {
+            if (Object.keys(selections).length !== 4) {
+                alert('Please answer all questions!');
+                return;
+            }
+
+            let rules = `# VibeCoding AI Assistant Rules
+
+You are an AI assistant helping children (ages ${selections.age}) create games with HTML5 Canvas.
+
+## Core Identity
+${templates.personality[selections.personality].intro}
+
+## Core Principles
+1. Always respond in a friendly, encouraging manner
+2. Keep code simple and easy to understand
+3. Use fun emojis in comments and messages
+4. Never debug - always provide working code
+5. Encourage creativity and experimentation
+
+## Personality Traits
+${templates.personality[selections.personality].rules.map(rule => `- ${rule}`).join('\n')}
+
+## Motivation Style
+${templates.motivation[selections.motivation].rules.map(rule => `- ${rule}`).join('\n')}
+
+## Learning Approach
+${templates.learning[selections.learning].rules.map(rule => `- ${rule}`).join('\n')}
+
+## Age-Appropriate Communication
+${templates.age[selections.age].rules.map(rule => `- ${rule}`).join('\n')}
+
+## Response Format
+- Start with encouragement
+- Provide clear, working code
+- Explain simply what the code does
+- Suggest fun next steps
+- End with "What should we try next?"
+
+## Game Development Guidelines
+1. Always use HTML5 Canvas for graphics
+2. Keep all code in a single HTML file
+3. Use simple variable names
+4. Add helpful comments
+5. Include fun visual effects
+
+## Error Handling
+- Never show error messages to children
+- Always wrap game logic in try-catch blocks
+- Provide fallback values for everything
+- Keep the game running no matter what
+
+Remember: The goal is to make coding fun and accessible, not to teach programming concepts!`;
+
+            document.getElementById('rulesContent').textContent = rules;
+            document.getElementById('result').style.display = 'block';
+            
+            // Scroll to result
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function copyToClipboard() {
+            const content = document.getElementById('rulesContent').textContent;
+            navigator.clipboard.writeText(content).then(() => {
+                const button = document.querySelector('.copy-button');
+                button.textContent = '✅ Copied!';
+                button.classList.add('copy-success');
+                
+                setTimeout(() => {
+                    button.textContent = '📋 Copy';
+                    button.classList.remove('copy-success');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="SANS Kids VibeCoding - AI와 함께하는 어린이 게임 개발 워크샵">
-    <meta name="keywords" content="SANS Kids, VibeCoding, AI 교육, 어린이 코딩, 게임 개발, Cursor AI">
+    <meta name="description" content="SANS Kids VibeCoding - Children's Game Development Workshop with AI">
+    <meta name="keywords" content="SANS Kids, VibeCoding, AI Education, Kids Coding, Game Development, Cursor AI">
     <meta name="author" content="Jay Lee, Jinyong Shin, Jiwoong Kim">
-    <title>SANS Kids VibeCoding - AI와 함께하는 어린이 게임 개발 워크샵</title>
+    <title>SANS Kids VibeCoding - Children's Game Development Workshop with AI</title>
     <style>
         :root {
             --primary-color: #ff6b6b;
@@ -15,6 +15,25 @@
             --bg-color: #f8f9fa;
             --card-bg: #ffffff;
             --shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
         /* Language Switcher */
@@ -40,25 +59,6 @@
         .lang-switcher a:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--bg-color);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
         }
 
         /* Header */
@@ -307,281 +307,281 @@
 </head>
 <body>
     <div class="lang-switcher">
-        <a href="index-en.html">🇺🇸 English</a>
+        <a href="index.html">🇰🇷 한국어</a>
     </div>
 
     <header>
         <div class="container">
             <h1>🎮 SANS Kids VibeCoding</h1>
-            <p>AI와 함께하는 어린이 게임 개발 워크샵</p>
+            <p>Children's Game Development Workshop with AI</p>
         </div>
     </header>
 
     <nav>
         <ul>
-            <li><a href="#about">소개</a></li>
-            <li><a href="#features">특징</a></li>
-            <li><a href="#workflows">교육 방식</a></li>
-            <li><a href="#ages">연령별 안내</a></li>
-            <li><a href="#improvements">발전 포인트</a></li>
-            <li><a href="ai-rules-generator.html" style="background: var(--primary-color); color: white; padding: 8px 16px; border-radius: 20px;">🎯 AI 맞춤 설정</a></li>
-            <li><a href="#demo">데모</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#workflows">Teaching Methods</a></li>
+            <li><a href="#ages">Age Groups</a></li>
+            <li><a href="#improvements">Improvements</a></li>
+            <li><a href="ai-rules-generator-en.html" style="background: var(--primary-color); color: white; padding: 8px 16px; border-radius: 20px;">🎯 AI Custom Settings</a></li>
+            <li><a href="#demo">Demo</a></li>
             <li><a href="https://github.com/jayleekr/sans-kids-school-2025" target="_blank">GitHub</a></li>
         </ul>
     </nav>
 
     <main class="container">
         <section id="about">
-            <h2>🌟 SANS Kids가 만드는 새로운 교육</h2>
+            <h2>🌟 New Education Created by SANS Kids</h2>
             <p style="text-align: center; font-size: 1.2em; margin-bottom: 40px;">
-                코딩을 배우지 않고도 게임을 만들 수 있어요!<br>
-                <strong>"문제 설정, 분해, AI 관리 능력"</strong>을 기르는 혁신적인 교육 프로그램입니다.
+                Create games without learning to code!<br>
+                <strong>"Problem Setting, Decomposition, and AI Management Skills"</strong> - An innovative educational program.
             </p>
 
             <div class="features">
                 <div class="feature-card">
                     <div class="feature-icon">🚫🐛</div>
-                    <h3>디버깅 없는 개발</h3>
-                    <p>에러가 나도 게임은 계속 실행! 좌절 없이 즐겁게 배워요.</p>
+                    <h3>Debug-Free Development</h3>
+                    <p>Games keep running even with errors! Learn joyfully without frustration.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">⚡</div>
-                    <h3>즉각적인 피드백</h3>
-                    <p>저장하면 10초 내 결과 확인. 빠른 피드백으로 몰입도 UP!</p>
+                    <h3>Instant Feedback</h3>
+                    <p>See results within 10 seconds of saving. Quick feedback increases engagement!</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">📄</div>
-                    <h3>단일 HTML 파일</h3>
-                    <p>복잡한 설정 NO! 하나의 파일로 모든 것을 만들어요.</p>
+                    <h3>Single HTML File</h3>
+                    <p>No complex setup! Create everything with just one file.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🤖</div>
-                    <h3>AI 선생님</h3>
-                    <p>5가지 AI 페르소나가 아이의 학습 스타일에 맞춰 가르쳐요.</p>
+                    <h3>AI Teachers</h3>
+                    <p>5 different AI personas teach according to each child's learning style.</p>
                 </div>
             </div>
         </section>
 
         <section id="workflows">
-            <h2>🎯 5가지 AI 교육 방식</h2>
+            <h2>🎯 5 AI Teaching Methods</h2>
             <p style="text-align: center; font-size: 1.1em; margin-bottom: 40px;">
-                아이의 성향과 연령에 맞는 최적의 학습 방법을 선택하세요
+                Choose the optimal learning method for your child's personality and age
             </p>
 
             <div class="workflow-gallery">
                 <div class="workflow-item">
-                    <img src="images/workflows/workflow-1-demo.png" alt="친근한 선생님 데모">
+                    <img src="images/workflows/workflow-1-demo.png" alt="Friendly Teacher Demo">
                     <div class="workflow-content">
-                        <span class="workflow-badge">8-10세 추천</span>
-                        <h3>👨‍🏫 친근한 선생님</h3>
-                        <p>격려와 칭찬으로 자신감을 키워주는 따뜻한 접근법. "잘했어요! 우리 같이 더 멋진 걸 만들어볼까요?"</p>
-                        <a href="examples/workflow-demos/workflow-1-banana-hero-game.html" class="demo-button">게임 체험하기</a>
+                        <span class="workflow-badge">Ages 8-10</span>
+                        <h3>👨‍🏫 Friendly Teacher</h3>
+                        <p>A warm approach that builds confidence with encouragement and praise. "Great job! Shall we make something even cooler together?"</p>
+                        <a href="examples/workflow-demos/workflow-1-banana-hero-game.html" class="demo-button">Try the Game</a>
                     </div>
                 </div>
 
                 <div class="workflow-item">
-                    <img src="images/workflows/workflow-2-demo.png" alt="문제 해결자 데모">
+                    <img src="images/workflows/workflow-2-demo.png" alt="Problem Solver Demo">
                     <div class="workflow-content">
-                        <span class="workflow-badge">11-13세 추천</span>
-                        <h3>🔍 문제 해결자</h3>
-                        <p>소크라테스식 문답법으로 스스로 답을 찾도록 유도. "왜 그렇게 생각했니? 다른 방법은 없을까?"</p>
-                        <a href="examples/workflow-demos/workflow-2-problem-solver-game.html" class="demo-button">게임 체험하기</a>
+                        <span class="workflow-badge">Ages 11-13</span>
+                        <h3>🔍 Problem Solver</h3>
+                        <p>Socratic method that guides children to find answers themselves. "Why did you think that? Are there other ways?"</p>
+                        <a href="examples/workflow-demos/workflow-2-problem-solver-game.html" class="demo-button">Try the Game</a>
                     </div>
                 </div>
 
                 <div class="workflow-item">
-                    <img src="images/workflows/workflow-3-demo.png" alt="빠른 구현 데모">
+                    <img src="images/workflows/workflow-3-demo.png" alt="Quick Implementation Demo">
                     <div class="workflow-content">
-                        <span class="workflow-badge">14-16세 추천</span>
-                        <h3>⚡ 빠른 구현</h3>
-                        <p>즉각적인 결과물로 성취감을 주는 실용적 접근. "바로 만들어보자! 5분 안에 완성할 수 있어!"</p>
-                        <a href="examples/workflow-demos/workflow-3-quick-implementation.html" class="demo-button">게임 체험하기</a>
+                        <span class="workflow-badge">Ages 14-16</span>
+                        <h3>⚡ Quick Implementation</h3>
+                        <p>Practical approach with immediate results for achievement. "Let's build it now! We can finish in 5 minutes!"</p>
+                        <a href="examples/workflow-demos/workflow-3-quick-implementation.html" class="demo-button">Try the Game</a>
                     </div>
                 </div>
 
                 <div class="workflow-item">
-                    <img src="images/workflows/workflow-4-demo.png" alt="스토리텔링 데모">
+                    <img src="images/workflows/workflow-4-demo.png" alt="Storytelling Demo">
                     <div class="workflow-content">
-                        <span class="workflow-badge">8-10세 추천</span>
-                        <h3>📖 스토리텔링</h3>
-                        <p>이야기와 함께 코드를 배우는 몰입형 학습. "용사가 드래곤을 물리치려면 어떤 능력이 필요할까?"</p>
-                        <a href="examples/workflow-demos/workflow-4-storytelling-adventure.html" class="demo-button">게임 체험하기</a>
+                        <span class="workflow-badge">Ages 8-10</span>
+                        <h3>📖 Storytelling</h3>
+                        <p>Immersive learning through stories and code. "What abilities does the hero need to defeat the dragon?"</p>
+                        <a href="examples/workflow-demos/workflow-4-storytelling-adventure.html" class="demo-button">Try the Game</a>
                     </div>
                 </div>
 
                 <div class="workflow-item">
-                    <img src="images/workflows/workflow-5-demo.png" alt="체크리스트 데모">
+                    <img src="images/workflows/workflow-5-demo.png" alt="Checklist Demo">
                     <div class="workflow-content">
-                        <span class="workflow-badge">11-13세 추천</span>
-                        <h3>✅ 체크리스트</h3>
-                        <p>체계적인 단계별 접근으로 복잡한 프로젝트도 완성. "1단계 완료! 다음은 뭘 해볼까?"</p>
-                        <a href="examples/workflow-demos/workflow-5-checklist-project.html" class="demo-button">게임 체험하기</a>
+                        <span class="workflow-badge">Ages 11-13</span>
+                        <h3>✅ Checklist</h3>
+                        <p>Complete complex projects with systematic step-by-step approach. "Step 1 done! What's next?"</p>
+                        <a href="examples/workflow-demos/workflow-5-checklist-project.html" class="demo-button">Try the Game</a>
                     </div>
                 </div>
             </div>
         </section>
 
         <section id="ages">
-            <h2>👶 연령별 맞춤 교육</h2>
+            <h2>👶 Age-Appropriate Education</h2>
             <div class="age-groups">
                 <div class="age-card">
-                    <span class="age-badge">8-10세</span>
-                    <h3>초등 저학년</h3>
+                    <span class="age-badge">Ages 8-10</span>
+                    <h3>Elementary Lower Grades</h3>
                     <ul>
-                        <li>🎮 "캐릭터가 움직이게 해주세요"</li>
-                        <li>🎨 "배경을 파란색으로 바꿔주세요"</li>
-                        <li>🔊 "점프할 때 소리가 나게 해주세요"</li>
-                        <li>💬 AI와 간단한 대화로 게임 만들기</li>
+                        <li>🎮 "Make the character move please"</li>
+                        <li>🎨 "Change the background to blue please"</li>
+                        <li>🔊 "Make a sound when jumping please"</li>
+                        <li>💬 Create games through simple conversations with AI</li>
                     </ul>
-                    <p style="margin-top: 15px;"><strong>추천:</strong> 친근한 선생님, 스토리텔링</p>
+                    <p style="margin-top: 15px;"><strong>Recommended:</strong> Friendly Teacher, Storytelling</p>
                 </div>
 
                 <div class="age-card">
-                    <span class="age-badge">11-13세</span>
-                    <h3>초등 고학년</h3>
+                    <span class="age-badge">Ages 11-13</span>
+                    <h3>Elementary Upper Grades</h3>
                     <ul>
-                        <li>⚔️ "적이 주인공에 닿으면 게임오버"</li>
-                        <li>🎯 "점수가 10점씩 올라가게 해주세요"</li>
-                        <li>🎮 "스테이지를 3개 만들어주세요"</li>
-                        <li>🤔 게임 규칙을 설계하고 AI에게 설명하기</li>
+                        <li>⚔️ "Game over when enemy touches the hero"</li>
+                        <li>🎯 "Make the score go up by 10 points"</li>
+                        <li>🎮 "Create 3 stages please"</li>
+                        <li>🤔 Design game rules and explain to AI</li>
                     </ul>
-                    <p style="margin-top: 15px;"><strong>추천:</strong> 문제 해결자, 체크리스트</p>
+                    <p style="margin-top: 15px;"><strong>Recommended:</strong> Problem Solver, Checklist</p>
                 </div>
 
                 <div class="age-card">
-                    <span class="age-badge">14-16세</span>
-                    <h3>중학생</h3>
+                    <span class="age-badge">Ages 14-16</span>
+                    <h3>Middle School</h3>
                     <ul>
-                        <li>🏗️ "RPG 게임처럼 레벨업 시스템 추가"</li>
-                        <li>📊 "아이템 인벤토리를 만들어주세요"</li>
-                        <li>🎮 "보스전이 있는 게임으로 발전시켜요"</li>
-                        <li>🚀 복잡한 게임 기획을 AI와 함께 구현</li>
+                        <li>🏗️ "Add a level-up system like RPG games"</li>
+                        <li>📊 "Create an item inventory please"</li>
+                        <li>🎮 "Develop it into a game with boss battles"</li>
+                        <li>🚀 Implement complex game plans with AI</li>
                     </ul>
-                    <p style="margin-top: 15px;"><strong>추천:</strong> 빠른 구현, 문제 해결자</p>
+                    <p style="margin-top: 15px;"><strong>Recommended:</strong> Quick Implementation, Problem Solver</p>
                 </div>
             </div>
         </section>
 
         <section id="demo">
-            <h2>🤖 AI 에이전트와 대화하는 방법</h2>
+            <h2>🤖 How to Talk with AI Agent</h2>
             <p style="text-align: center; margin-bottom: 30px;">
-                코딩을 몰라도 괜찮아요! AI에게 원하는 것을 말하면 됩니다
+                It's okay if you don't know coding! Just tell the AI what you want
             </p>
             
             <div style="background: #f0f8ff; padding: 40px; border-radius: 15px; margin: 30px 0;">
                 <h3 style="color: var(--primary-color); margin-bottom: 30px; text-align: center;">
-                    💬 실제 대화 예시
+                    💬 Real Conversation Example
                 </h3>
                 
                 <div style="max-width: 800px; margin: 0 auto;">
                     <div style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: var(--shadow);">
-                        <p style="color: #2ecc71; font-weight: bold; margin-bottom: 10px;">👦 아이:</p>
-                        <p style="font-size: 1.1em;">"원숭이가 하늘을 날아다니는 게임을 만들고 싶어요!"</p>
+                        <p style="color: #2ecc71; font-weight: bold; margin-bottom: 10px;">👦 Child:</p>
+                        <p style="font-size: 1.1em;">"I want to make a game where a monkey flies in the sky!"</p>
                     </div>
                     
                     <div style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: var(--shadow);">
                         <p style="color: #3498db; font-weight: bold; margin-bottom: 10px;">🤖 AI:</p>
-                        <p style="font-size: 1.1em;">"좋아요! 원숭이가 날아다니는 게임을 만들어드릴게요. 키보드로 조작할까요, 아니면 마우스로 조작할까요?"</p>
+                        <p style="font-size: 1.1em;">"Great! I'll help you make a game with a flying monkey. Should we control it with keyboard or mouse?"</p>
                     </div>
                     
                     <div style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: var(--shadow);">
-                        <p style="color: #2ecc71; font-weight: bold; margin-bottom: 10px;">👦 아이:</p>
-                        <p style="font-size: 1.1em;">"키보드로요! 그리고 바나나도 던질 수 있으면 좋겠어요!"</p>
+                        <p style="color: #2ecc71; font-weight: bold; margin-bottom: 10px;">👦 Child:</p>
+                        <p style="font-size: 1.1em;">"With keyboard! And I want to throw bananas too!"</p>
                     </div>
                     
                     <div style="background: white; padding: 20px; border-radius: 10px; box-shadow: var(--shadow);">
                         <p style="color: #3498db; font-weight: bold; margin-bottom: 10px;">🤖 AI:</p>
-                        <p style="font-size: 1.1em;">"알겠어요! 방향키로 원숭이를 움직이고, 스페이스바로 바나나를 던지는 게임을 만들었어요. 실행해보세요!"</p>
+                        <p style="font-size: 1.1em;">"Got it! I've created a game where you move the monkey with arrow keys and throw bananas with spacebar. Try it out!"</p>
                     </div>
                 </div>
             </div>
             
             <div class="features" style="margin-top: 50px;">
                 <div class="feature-card">
-                    <h3>🎯 문제 정의하기</h3>
-                    <p>"어떤 게임을 만들고 싶니?"<br>
-                    아이디어를 명확하게 표현하는 법을 배워요</p>
+                    <h3>🎯 Define Problems</h3>
+                    <p>"What kind of game do you want to make?"<br>
+                    Learn to express ideas clearly</p>
                 </div>
                 <div class="feature-card">
-                    <h3>🧩 문제 분해하기</h3>
-                    <p>"게임에 뭐가 필요할까?"<br>
-                    큰 문제를 작은 단위로 나누는 법을 익혀요</p>
+                    <h3>🧩 Break Down Problems</h3>
+                    <p>"What do we need for the game?"<br>
+                    Learn to divide big problems into smaller parts</p>
                 </div>
                 <div class="feature-card">
-                    <h3>🤝 AI와 소통하기</h3>
-                    <p>"이렇게 바꿔줄 수 있어?"<br>
-                    AI와 효과적으로 대화하는 방법을 터득해요</p>
+                    <h3>🤝 Communicate with AI</h3>
+                    <p>"Can you change it like this?"<br>
+                    Master effective conversation with AI</p>
                 </div>
                 <div class="feature-card">
-                    <h3>🔄 반복 개선하기</h3>
-                    <p>"더 재미있게 만들어보자!"<br>
-                    지속적인 개선을 통해 완성도를 높여요</p>
+                    <h3>🔄 Iterate and Improve</h3>
+                    <p>"Let's make it more fun!"<br>
+                    Enhance quality through continuous improvement</p>
                 </div>
             </div>
         </section>
 
         <section id="improvements">
-            <h2>🌟 게임 발전시키기</h2>
+            <h2>🌟 Improving Your Game</h2>
             <p style="text-align: center; font-size: 1.1em; margin-bottom: 40px;">
-                기본 게임을 완성했나요? 이제 더 재미있게 만들어봐요!
+                Finished the basic game? Now let's make it more fun!
             </p>
             
             <div style="background: #f0f8ff; padding: 40px; border-radius: 15px; margin: 30px 0;">
-                <h3 style="text-align: center; margin-bottom: 30px;">🎯 발전 포인트 예시</h3>
+                <h3 style="text-align: center; margin-bottom: 30px;">🎯 Improvement Ideas</h3>
                 
                 <div class="features">
                     <div class="feature-card">
-                        <h4>🎨 시각적 개선</h4>
+                        <h4>🎨 Visual Improvements</h4>
                         <ul style="text-align: left;">
-                            <li>배경에 구름 추가하기</li>
-                            <li>캐릭터 크기 조절하기</li>
-                            <li>반짝이는 효과 넣기</li>
+                            <li>Add clouds to the background</li>
+                            <li>Adjust character size</li>
+                            <li>Add sparkling effects</li>
                         </ul>
                     </div>
                     
                     <div class="feature-card">
-                        <h4>🎮 게임플레이</h4>
+                        <h4>🎮 Gameplay</h4>
                         <ul style="text-align: left;">
-                            <li>파워업 아이템 추가</li>
-                            <li>보스 캐릭터 만들기</li>
-                            <li>스테이지 시스템</li>
+                            <li>Add power-up items</li>
+                            <li>Create boss characters</li>
+                            <li>Stage system</li>
                         </ul>
                     </div>
                     
                     <div class="feature-card">
-                        <h4>🏆 도전 과제</h4>
+                        <h4>🏆 Challenges</h4>
                         <ul style="text-align: left;">
-                            <li>업적 시스템 추가</li>
-                            <li>최고 점수 기록</li>
-                            <li>숨겨진 비밀 찾기</li>
+                            <li>Add achievement system</li>
+                            <li>High score records</li>
+                            <li>Find hidden secrets</li>
                         </ul>
                     </div>
                     
                     <div class="feature-card">
-                        <h4>👥 소셜 기능</h4>
+                        <h4>👥 Social Features</h4>
                         <ul style="text-align: left;">
-                            <li>친구와 함께 플레이</li>
-                            <li>점수 공유하기</li>
-                            <li>협동 모드 추가</li>
+                            <li>Play with friends</li>
+                            <li>Share scores</li>
+                            <li>Add co-op mode</li>
                         </ul>
                     </div>
                 </div>
                 
                 <p style="text-align: center; margin-top: 30px; font-size: 1.1em;">
-                    <strong>💡 팁:</strong> AI에게 "파워업 아이템을 추가하고 싶어!" 라고 말해보세요
+                    <strong>💡 Tip:</strong> Try telling the AI "I want to add power-up items!"
                 </p>
             </div>
         </section>
 
         <section style="text-align: center; padding: 60px 0;">
-            <h2>🚀 지금 시작하세요!</h2>
+            <h2>🚀 Start Now!</h2>
             <p style="font-size: 1.2em; margin-bottom: 30px;">
-                AI와 함께하는 신나는 게임 개발의 세계로 초대합니다
+                Welcome to the exciting world of game development with AI
             </p>
             
             <div style="background: #fffacd; padding: 30px; border-radius: 15px; margin: 30px auto; max-width: 800px;">
-                <h3 style="color: var(--primary-color); margin-bottom: 20px;">⚡ One-Line 자동 시작</h3>
-                <p style="margin-bottom: 15px;">복사해서 붙여넣기만 하면 끝!</p>
+                <h3 style="color: var(--primary-color); margin-bottom: 20px;">⚡ One-Line Auto Start</h3>
+                <p style="margin-bottom: 15px;">Just copy and paste!</p>
                 
                 <div style="background: #333; color: #fff; padding: 15px; border-radius: 10px; text-align: left; margin: 10px 0; font-family: monospace;">
                     <strong>Windows (PowerShell):</strong><br>
@@ -599,10 +599,10 @@
             </div>
             
             <a href="https://github.com/jayleekr/sans-kids-school-2025/releases/latest" class="demo-button" style="font-size: 1.2em; padding: 15px 40px; margin: 10px;">
-                📦 최신 Release 다운로드
+                📦 Download Latest Release
             </a>
             <a href="https://github.com/jayleekr/sans-kids-school-2025" class="demo-button" style="font-size: 1.2em; padding: 15px 40px; margin: 10px; background: var(--secondary-color);">
-                🐙 GitHub 저장소
+                🐙 GitHub Repository
             </a>
         </section>
     </main>

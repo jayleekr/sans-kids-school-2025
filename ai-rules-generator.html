@@ -152,9 +152,36 @@
                 font-size: 18px;
             }
         }
+        /* Language Switcher */
+        .lang-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .lang-switcher a {
+            display: inline-block;
+            padding: 8px 16px;
+            background: white;
+            color: #2196f3;
+            text-decoration: none;
+            border-radius: 20px;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .lang-switcher a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
     </style>
 </head>
 <body>
+    <div class="lang-switcher">
+        <a href="ai-rules-generator-en.html">🇺🇸 English</a>
+    </div>
+
     <div class="card">
         <h1>🎮 VibeCoding AI 선생님 만들기</h1>
         <p class="subtitle">AI가 우리 아이에게 맞는 방식으로 게임 만들기를 가르치도록 설정해보세요!</p>
