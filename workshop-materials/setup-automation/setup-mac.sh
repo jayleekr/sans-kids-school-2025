@@ -14,9 +14,13 @@ NC='\033[0m' # No Color
 
 # 1. 작업 폴더 생성
 echo "[1/10] 📁 작업 폴더 생성 중..."
-cd ~
-mkdir -p VibeCoding/{games,templates,backup}
-cd VibeCoding
+# 스크립트가 있는 디렉토리로 이동 (프로젝트 루트)
+cd "$(dirname "$0")"
+cd ../..
+PROJECT_DIR=$(pwd)
+echo "📁 프로젝트 디렉토리: $PROJECT_DIR"
+mkdir -p VibeCoding-workspace/{games,templates,backup}
+cd VibeCoding-workspace
 echo -e "${GREEN}✅ 폴더 생성 완료!${NC}"
 
 # 2. Cursor 설치 확인
@@ -184,7 +188,7 @@ if command -v node &> /dev/null; then
     
     # MCP Playwright 서버 설치
     echo "📦 MCP Playwright 서버 설치 중..."
-    npm install -g @modelcontextprotocol/server-playwright
+    npm install -g @playwright/mcp@latest
     
     if [ $? -eq 0 ]; then
         echo -e "${GREEN}✅ MCP Playwright 서버 설치 완료!${NC}"
@@ -205,28 +209,32 @@ else
     fi
 fi
 
-# 7. Cursor MCP 설정
+# 7. Cursor MCP 설정 (프로젝트별)
 echo ""
 echo "[7/10] ⚙️  Cursor MCP 설정 중..."
 
-# Cursor 설정 디렉토리 생성
-CURSOR_CONFIG_DIR="$HOME/Library/Application Support/Cursor/User"
-mkdir -p "$CURSOR_CONFIG_DIR"
+# 프로젝트 루트의 .cursor 디렉토리에 MCP 설정 파일 생성
+cd "$PROJECT_DIR"
+mkdir -p .cursor
 
-# MCP 설정 파일 생성
-cat > "$CURSOR_CONFIG_DIR/settings.json" << 'EOF'
+# 프로젝트별 MCP 설정 파일 생성
+cat > .cursor/mcp.json << 'EOF'
 {
   "mcpServers": {
     "playwright": {
       "command": "npx",
-      "args": ["@modelcontextprotocol/server-playwright"],
-      "env": {}
+      "args": [
+        "@playwright/mcp@latest"
+      ]
     }
   }
 }
 EOF
 
-echo -e "${GREEN}✅ Cursor MCP 설정 완료!${NC}"
+# 작업 디렉토리로 다시 돌아가기
+cd VibeCoding-workspace
+
+echo -e "${GREEN}✅ 프로젝트별 Cursor MCP 설정 완료!${NC}"
 
 # 8. VS Code 설정 파일 생성
 echo ""
@@ -319,12 +327,14 @@ echo "====================================================="
 echo -e "   ${GREEN}✅ 설정 완료!${NC}"
 echo "====================================================="
 echo ""
+echo "📁 프로젝트 디렉토리: $PROJECT_DIR"
 echo "📁 작업 폴더: $PWD"
 echo "📄 템플릿 파일: $PWD/templates/basic-game.html"
+echo "⚙️  MCP 설정: $PROJECT_DIR/.cursor/mcp.json"
 echo ""
 echo "🚀 시작하는 방법:"
-echo "   방법 1: 데스크톱의 'VibeCoding-워크숍' 더블클릭"
-echo "   방법 2: 터미널에서 ./start-workshop.sh 실행"
+echo "   방법 1: Cursor에서 프로젝트 폴더 열기 → VibeCoding-workspace 폴더에서 작업"
+echo "   방법 2: 데스크톱의 'VibeCoding-워크숍' 더블클릭"
 echo "   방법 3: Cursor에서 Cmd+Shift+P → 'MCP: Open Browser' 사용!"
 echo ""
 echo "🤖 MCP 기능:"
@@ -332,5 +342,5 @@ echo "   - 브라우저 자동 실행"
 echo "   - 게임 자동 테스트"
 echo "   - 스크린샷 촬영"
 echo ""
-echo "💡 팁: Command+Space로 화면을 좌우로 나누세요!"
+echo "💡 팁: Cursor에서 프로젝트를 열어야 MCP 설정이 활성화됩니다!"
 echo ""

@@ -20,9 +20,13 @@ if %errorLevel% == 0 (
 :: 1. 작업 폴더 생성
 echo.
 echo [1/10] 📁 작업 폴더 생성 중...
-cd /d %USERPROFILE%
-if not exist "VibeCoding" mkdir VibeCoding
-cd VibeCoding
+:: 스크립트가 있는 디렉토리로 이동 (프로젝트 루트)
+cd /d "%~dp0"
+cd ..\..
+set PROJECT_DIR=%CD%
+echo 📁 프로젝트 디렉토리: %PROJECT_DIR%
+if not exist "VibeCoding-workspace" mkdir VibeCoding-workspace
+cd VibeCoding-workspace
 if not exist "games" mkdir games
 if not exist "templates" mkdir templates
 if not exist "backup" mkdir backup
@@ -211,7 +215,7 @@ if %errorLevel% == 0 (
     
     :: MCP Playwright 서버 설치
     echo 📦 MCP Playwright 서버 설치 중...
-    npm install -g @modelcontextprotocol/server-playwright
+    npm install -g @playwright/mcp@latest
     
     if %errorLevel% == 0 (
         echo ✅ MCP Playwright 서버 설치 완료!
@@ -224,27 +228,32 @@ if %errorLevel% == 0 (
     start https://nodejs.org
 )
 
-:: 7. Cursor MCP 설정
+:: 7. Cursor MCP 설정 (프로젝트별)
 echo.
 echo [8/10] ⚙️  Cursor MCP 설정 중...
 
-:: Cursor 설정 디렉토리 생성
-if not exist "%APPDATA%\Cursor\User" mkdir "%APPDATA%\Cursor\User"
+:: 프로젝트 루트의 .cursor 디렉토리에 MCP 설정 파일 생성
+cd /d "%PROJECT_DIR%"
+if not exist ".cursor" mkdir .cursor
 
-:: MCP 설정 파일 생성
+:: 프로젝트별 MCP 설정 파일 생성
 (
 echo {
 echo   "mcpServers": {
 echo     "playwright": {
 echo       "command": "npx",
-echo       "args": ["@modelcontextprotocol/server-playwright"],
-echo       "env": {}
+echo       "args": [
+echo         "@playwright/mcp@latest"
+echo       ]
 echo     }
 echo   }
 echo }
-) > "%APPDATA%\Cursor\User\globalStorage\settings.json"
+) > .cursor\mcp.json
 
-echo ✅ Cursor MCP 설정 완료!
+:: 작업 디렉토리로 다시 돌아가기
+cd VibeCoding-workspace
+
+echo ✅ 프로젝트별 Cursor MCP 설정 완료!
 
 :: 9. 자동 실행 스크립트 생성
 echo.
@@ -275,12 +284,14 @@ echo =====================================================
 echo    ✅ 설정 완료!
 echo =====================================================
 echo.
+echo 📁 프로젝트 디렉토리: %PROJECT_DIR%
 echo 📁 작업 폴더: %CD%
 echo 📄 템플릿 파일: %CD%\templates\basic-game.html
+echo ⚙️  MCP 설정: %PROJECT_DIR%\.cursor\mcp.json
 echo.
 echo 🚀 시작하는 방법:
-echo    1. Cursor 실행
-echo    2. File → Open Folder → VibeCoding 폴더 선택  
+echo    1. Cursor에서 프로젝트 폴더 열기 → VibeCoding-workspace 폴더에서 작업
+echo    2. File → Open Folder → VibeCoding-workspace 폴더 선택  
 echo    3. templates\basic-game.html 열기
 echo    4. 우클릭 → "Open with Live Server"
 echo    5. 또는 start-game.bat 더블클릭으로 자동 실행!
@@ -296,6 +307,6 @@ echo    - 브라우저 자동 실행
 echo    - 게임 자동 테스트
 echo    - 스크린샷 촬영
 echo.
-echo 💡 팁: 바탕화면의 "VibeCoding 워크숍" 바로가기를 사용하세요!
+echo 💡 팁: Cursor에서 프로젝트를 열어야 MCP 설정이 활성화됩니다!
 echo.
 pause
