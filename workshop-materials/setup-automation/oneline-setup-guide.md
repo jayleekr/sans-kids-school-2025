@@ -21,12 +21,6 @@ if (Get-Command cursor -ErrorAction SilentlyContinue) { Write-Host "Cursor 설�
 
 ### 기본 설정
 ```bash
-# Terminal에서 실행
-curl -fsSL https://raw.githubusercontent.com/jayleekr/sans-kids-school-2025/main/workshop-materials/setup-automation/setup-mac.sh | bash -s -- --quick
-```
-
-### 또는 직접 명령어
-```bash
 # 한 줄로 실행
 mkdir -p ~/Desktop/VibeCoding && cd ~/Desktop/VibeCoding && echo "VibeCoding 설정 완료! 작업 폴더: ~/Desktop/VibeCoding" && open ~/Desktop/VibeCoding
 ```
@@ -115,7 +109,7 @@ echo "✅ game.html 생성 완료!" && open game.html
 
 - **Windows**: PowerShell을 관리자 권한으로 실행해야 합니다
 - **Mac**: 첫 실행 시 권한 요청이 있을 수 있습니다
-- **MCP 설정**: Node.js가 필요합니다 (없으면 https://nodejs.org 에서 설치)
+- **Node.js**: Live Server 확장을 사용하려면 Node.js가 필요할 수 있습니다
 
 ## 🆘 문제 해결
 

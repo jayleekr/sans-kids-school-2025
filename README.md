@@ -31,16 +31,19 @@ SANS Kids VibeCoding은 SANS Kids에서 개발한 AI 협업 게임 개발 교육
 
 ### 방법 2: One-Line 설치 (다운로드 없이! 🚀)
 
-#### Windows (PowerShell)
+#### Windows (PowerShell) - 환경 확인 포함
 ```powershell
-# 복사해서 PowerShell에 붙여넣기
-$w="$env:USERPROFILE\Desktop\VibeCoding"; Write-Host "VibeCoding 설정 시작..." -ForegroundColor Cyan; New-Item -Path $w -ItemType Directory -Force | Out-Null; Set-Location $w; Write-Host "폴더 생성 완료!" -ForegroundColor Green; Write-Host "Cursor에서 이 폴더를 여세요: $w" -ForegroundColor Yellow; Start-Process explorer.exe $w
+# 복사해서 PowerShell에 붙여넣기 (Cursor 확인 + 작업 폴더 생성)
+if (Get-Command cursor -EA SilentlyContinue) { Write-Host "✓ Cursor 설치됨" -ForegroundColor Green } else { Write-Host "✗ Cursor 미설치 - 다운로드 페이지를 엽니다..." -ForegroundColor Yellow; Start-Process "https://cursor.com" }; $w="$env:USERPROFILE\Desktop\VibeCoding"; New-Item -Path $w -ItemType Directory -Force | Out-Null; Write-Host "📁 작업 폴더: $w" -ForegroundColor Green; Start-Process explorer.exe $w
 ```
 
-#### Mac/Linux (Terminal)
+#### Mac/Linux (Terminal) - 환경 확인 포함
 ```bash
-mkdir -p ~/Desktop/VibeCoding && cd ~/Desktop/VibeCoding && echo "✅ 설정 완료! 📁 작업 폴더: ~/Desktop/VibeCoding" && open ~/Desktop/VibeCoding
+# 복사해서 Terminal에 붙여넣기 (Cursor 확인 + 작업 폴더 생성)
+if command -v cursor &> /dev/null || [ -d "/Applications/Cursor.app" ]; then echo "✓ Cursor 설치됨"; else echo "✗ Cursor 미설치" && open "https://cursor.com"; fi; mkdir -p ~/Desktop/VibeCoding && cd ~/Desktop/VibeCoding && echo "📁 작업 폴더: ~/Desktop/VibeCoding" && open ~/Desktop/VibeCoding
 ```
+
+더 많은 설정 옵션이 필요하신가요? 👉 [환경 설정 가이드](workshop-materials/setup-automation/oneline-environment-setup.md)
 
 ### 방법 3: Git Clone (개발자용)
 ```bash
