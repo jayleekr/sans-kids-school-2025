@@ -190,4 +190,5 @@ This serves as the consistent baseline for testing all workflow approaches.
 - `workshop-materials/facilitator-checklist.md` - Complete workshop timeline  
 - `workshop-materials/emergency-troubleshooting.md` - 30-second problem resolution
 - `workshop-materials/mcp-automation-guide.md` - MCP Playwright automation and browser testing
+- `educational-scenarios/cursor-prompts-for-kids.md` - AI prompts for children's game development
 - `workflows/` - 5 different teaching approaches to test

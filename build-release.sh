@@ -36,13 +36,17 @@ cp -r workflows/* release/${RELEASE_NAME}/workflows/
 mkdir -p release/${RELEASE_NAME}/examples
 cp -r examples/* release/${RELEASE_NAME}/examples/
 
-# 6. 이미지 (있으면)
+# 6. 교육 시나리오
+mkdir -p release/${RELEASE_NAME}/educational-scenarios
+cp -r educational-scenarios/* release/${RELEASE_NAME}/educational-scenarios/
+
+# 7. 이미지 (있으면)
 if [ -d "images" ]; then
     mkdir -p release/${RELEASE_NAME}/images
     cp -r images/* release/${RELEASE_NAME}/images/
 fi
 
-# 7. 평가 기준
+# 8. 평가 기준
 mkdir -p release/${RELEASE_NAME}/evaluation
 cp -r evaluation/* release/${RELEASE_NAME}/evaluation/
 
