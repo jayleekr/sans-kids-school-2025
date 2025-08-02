@@ -4,7 +4,7 @@
 echo "🎮 VibeCoding Release 빌드 시작..."
 
 # 버전 설정
-VERSION="v1.0.0"
+VERSION="v1.1.0"
 RELEASE_NAME="VibeCoding-${VERSION}"
 
 # Release 디렉토리 생성

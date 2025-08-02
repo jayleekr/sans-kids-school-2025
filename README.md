@@ -29,24 +29,25 @@ SANS Kids VibeCoding은 SANS Kids에서 개발한 AI 협업 게임 개발 교육
 3. `start-workshop.bat` (Windows) 또는 `start-workshop.sh` (Mac) 실행
 4. Cursor에서 폴더 열기
 
-### 방법 2: Git Clone (개발자용)
+### 방법 2: One-Line 설치 (다운로드 없이! 🚀)
+
+#### Windows (PowerShell 관리자 권한)
+```powershell
+# 복사해서 PowerShell에 붙여넣기
+powershell -NoProfile -Command "& { $ErrorActionPreference='Stop'; try { $w=\"$env:USERPROFILE\Desktop\VibeCoding\"; Write-Host '🎮 VibeCoding 설정 시작...' -ForegroundColor Cyan; Write-Host \"작업 폴더: $w\" -ForegroundColor Gray; New-Item -Path $w -ItemType Directory -Force | Out-Null; Set-Location $w; New-Item -Path '.cursor' -ItemType Directory -Force | Out-Null; $mcp = @{mcpServers=@{playwright=@{command='npx';args=@('@playwright/mcp@latest')}}} | ConvertTo-Json -Depth 10; $mcp | Out-File -FilePath '.cursor\mcp.json' -Encoding UTF8 -Force; Write-Host '✅ 설정 완료!' -ForegroundColor Green; Write-Host \"📁 Cursor에서 이 폴더를 여세요: $w\" -ForegroundColor Yellow } catch { Write-Host \"❌ 오류 발생: $_\" -ForegroundColor Red; Write-Host '💡 workshop-materials/setup-automation/debug-setup-commands.md 참조' -ForegroundColor Yellow } }"
+```
+
+문제가 있나요? 👉 [디버그 가이드](workshop-materials/setup-automation/debug-setup-commands.md) 참조
+
+#### Mac/Linux (Terminal)
+```bash
+mkdir -p ~/Desktop/VibeCoding && cd ~/Desktop/VibeCoding && mkdir -p .cursor && echo '{"mcpServers":{"playwright":{"command":"npx","args":["@playwright/mcp@latest"]}}}' > .cursor/mcp.json && echo "✅ 설정 완료! 📁 작업 폴더: ~/Desktop/VibeCoding"
+```
+
+### 방법 3: Git Clone (개발자용)
 ```bash
 git clone https://github.com/jayleekr/sans-kids-school-2025.git
 cd sans-kids-school-2025
-```
-
-### 환경 설정 (방법 2를 선택한 경우)
-
-#### Windows
-```batch
-# 관리자 권한으로 실행
-workshop-materials\setup-automation\setup-windows.bat
-```
-
-#### Mac/Linux
-```bash
-chmod +x workshop-materials/setup-automation/setup-mac.sh
-./workshop-materials/setup-automation/setup-mac.sh
 ```
 
 설치 내용:
