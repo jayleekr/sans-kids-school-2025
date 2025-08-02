@@ -31,17 +31,15 @@ SANS Kids VibeCoding은 SANS Kids에서 개발한 AI 협업 게임 개발 교육
 
 ### 방법 2: One-Line 설치 (다운로드 없이! 🚀)
 
-#### Windows (PowerShell 관리자 권한)
+#### Windows (PowerShell)
 ```powershell
 # 복사해서 PowerShell에 붙여넣기
-powershell -NoProfile -Command "& { $ErrorActionPreference='Stop'; try { $w=\"$env:USERPROFILE\Desktop\VibeCoding\"; Write-Host '🎮 VibeCoding 설정 시작...' -ForegroundColor Cyan; Write-Host \"작업 폴더: $w\" -ForegroundColor Gray; New-Item -Path $w -ItemType Directory -Force | Out-Null; Set-Location $w; New-Item -Path '.cursor' -ItemType Directory -Force | Out-Null; $mcp = @{mcpServers=@{playwright=@{command='npx';args=@('@playwright/mcp@latest')}}} | ConvertTo-Json -Depth 10; $mcp | Out-File -FilePath '.cursor\mcp.json' -Encoding UTF8 -Force; Write-Host '✅ 설정 완료!' -ForegroundColor Green; Write-Host \"📁 Cursor에서 이 폴더를 여세요: $w\" -ForegroundColor Yellow } catch { Write-Host \"❌ 오류 발생: $_\" -ForegroundColor Red; Write-Host '💡 workshop-materials/setup-automation/debug-setup-commands.md 참조' -ForegroundColor Yellow } }"
+powershell -NoProfile -Command "& { $w=\"$env:USERPROFILE\Desktop\VibeCoding\"; Write-Host '🎮 VibeCoding 설정 시작...' -ForegroundColor Cyan; New-Item -Path $w -ItemType Directory -Force | Out-Null; Set-Location $w; Write-Host '✅ 폴더 생성 완료!' -ForegroundColor Green; Write-Host \"📁 Cursor에서 이 폴더를 여세요: $w\" -ForegroundColor Yellow; Start-Process explorer.exe $w }"
 ```
-
-문제가 있나요? 👉 [디버그 가이드](workshop-materials/setup-automation/debug-setup-commands.md) 참조
 
 #### Mac/Linux (Terminal)
 ```bash
-mkdir -p ~/Desktop/VibeCoding && cd ~/Desktop/VibeCoding && mkdir -p .cursor && echo '{"mcpServers":{"playwright":{"command":"npx","args":["@playwright/mcp@latest"]}}}' > .cursor/mcp.json && echo "✅ 설정 완료! 📁 작업 폴더: ~/Desktop/VibeCoding"
+mkdir -p ~/Desktop/VibeCoding && cd ~/Desktop/VibeCoding && echo "✅ 설정 완료! 📁 작업 폴더: ~/Desktop/VibeCoding" && open ~/Desktop/VibeCoding
 ```
 
 ### 방법 3: Git Clone (개발자용)
@@ -50,11 +48,9 @@ git clone https://github.com/jayleekr/sans-kids-school-2025.git
 cd sans-kids-school-2025
 ```
 
-설치 내용:
-- Cursor (AI 코드 에디터)
-- Live Server 확장
-- MCP Playwright (브라우저 자동화)
-- 프로젝트 폴더 구조
+필요한 도구:
+- Cursor (AI 코드 에디터) - https://cursor.com
+- 웹 브라우저 (Chrome, Edge, Safari 등)
 
 ### 2. 게임 개발 시작
 
@@ -67,8 +63,8 @@ cd sans-kids-school-2025
    - AI와의 대화를 통해 복잡도 조절
 
 3. **실행 방법**:
-   - 방법 1: HTML 파일 우클릭 → "Open with Live Server"
-   - 방법 2: `Ctrl+Shift+P` → "MCP: Open Browser" (자동화)
+   - HTML 파일을 브라우저로 열기 (더블클릭 또는 드래그)
+   - 또는 Cursor에서 Live Server 확장 사용
 
 4. **개발 사이클**: 대화 → 코드 생성 → 저장(Ctrl+S) → 자동 새로고침 → 결과 확인
 

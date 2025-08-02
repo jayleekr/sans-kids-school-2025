@@ -39,27 +39,17 @@ VibeCoding은 8-16세 아이들에게 Cursor와 AI 협업을 통한 게임 개�
 
 ### 환경 설정
 ```bash
-# Windows (관리자 권한으로 실행) - MCP Playwright 포함
-workshop-materials/setup-automation/setup-windows.bat
+# Windows - 작업 폴더 생성
+md %USERPROFILE%\Desktop\VibeCoding
 
-# Mac/Linux - MCP Playwright 포함
-chmod +x workshop-materials/setup-automation/setup-mac.sh
-./workshop-materials/setup-automation/setup-mac.sh
+# Mac/Linux - 작업 폴더 생성
+mkdir -p ~/Desktop/VibeCoding
 ```
-
-### MCP 통합
-설정 스크립트는 이제 MCP Playwright를 자동으로 설치하고 구성합니다:
-- **자동 브라우저 실행**: `Ctrl+Shift+P` → "MCP: Open Browser"
-- **게임 테스트 자동화**: AI가 자동으로 게임 기능을 테스트할 수 있습니다
-- **스크린샷 캡처**: 자동 게임 진행 상황 문서화
-- **향상된 워크플로우**: 코드 → 저장 → MCP 자동 테스트 → 시각적 피드백
 
 ### 게임 개발 워크플로우
 1. **기본 템플릿으로 시작**: `sandbox-environments/game-template-starter.html` 사용
-2. **실행 옵션**:
-   - **방법 1**: HTML 파일 우클릭 → "Open with Live Server"
-   - **방법 2**: `Ctrl+Shift+P` → "MCP: Open Browser" (자동화)
-3. **향상된 개발 사이클**: 코드 편집 → 저장 (Ctrl+S) → MCP 자동 테스트 → 시각적 피드백
+2. **실행 방법**: HTML 파일을 브라우저로 열기 (더블클릭 또는 드래그)
+3. **개발 사이클**: 코드 편집 → 저장 (Ctrl+S) → 브라우저 새로고침 (F5) → 결과 확인
 4. **화면 레이아웃**: Cursor (50%) + 브라우저 (50%) 나란히 배치
 
 ### 워크플로우 테스트
@@ -189,6 +179,5 @@ This serves as the consistent baseline for testing all workflow approaches.
 - `sandbox-environments/no-debug-approach.md` - Core philosophy and implementation
 - `workshop-materials/facilitator-checklist.md` - Complete workshop timeline  
 - `workshop-materials/emergency-troubleshooting.md` - 30-second problem resolution
-- `workshop-materials/mcp-automation-guide.md` - MCP Playwright automation and browser testing
 - `educational-scenarios/cursor-prompts-for-kids.md` - AI prompts for children's game development
 - `workflows/` - 5 different teaching approaches to test

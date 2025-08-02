@@ -2,6 +2,14 @@
 
 ## [v1.1.0] - 2025-08-02
 
+### 🔄 주요 변경사항
+- **MCP (Model Context Protocol) 제거**
+  - 모든 MCP 관련 설정과 참조 제거
+  - 더 간단한 설치 프로세스
+  - 브라우저 직접 실행 방식으로 변경
+
+## [v1.1.0-beta] - 2025-08-02
+
 ### 🎉 새로운 기능
 - **AI 프롬프트 가이드 추가** 
   - `educational-scenarios/cursor-prompts-for-kids.md` - 아이들을 위한 AI 대화 가이드
