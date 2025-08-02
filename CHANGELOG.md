@@ -1,5 +1,27 @@
 # 변경 기록 (Changelog)
 
+## [v1.1.2] - 2025-08-02
+
+### 🎉 새로운 기능
+- **One-Line Release 자동 다운로드 명령어**
+  - GitHub API를 사용해 최신 Release 자동 감지
+  - 자동 다운로드 → 압축 해제 → 실행까지 한 번에
+  - Windows PowerShell 및 Mac/Linux Terminal 지원
+  - Git 설치 없이도 최신 버전 사용 가능
+
+### 🔧 개선사항
+- README.md 설치 방법 재정렬
+  - One-Line Release 다운로드를 방법 1로 (가장 추천)
+  - 기존 수동 다운로드는 방법 2로
+  - 개발 환경 설치는 방법 3으로
+  - Git Clone은 방법 4로 (개발자용)
+
+## [v1.1.1] - 2025-08-02
+
+### 🐛 버그 수정
+- PowerShell one-line 명령어 이스케이프 문제 수정
+- MCP 관련 코드 완전 제거
+
 ## [v1.1.0] - 2025-08-02
 
 ### 🔄 주요 변경사항

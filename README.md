@@ -23,29 +23,43 @@ SANS Kids VibeCoding은 SANS Kids에서 개발한 AI 협업 게임 개발 교육
 
 ## 🚀 빠른 시작
 
-### 방법 1: Release 다운로드 (Git 없이! 추천 👍)
+### 방법 1: One-Line Release 자동 다운로드 (추천! 🚀)
+
+#### Windows (PowerShell)
+```powershell
+# 최신 Release 자동 다운로드 + 압축 해제 + 실행 (한 줄로 복사-붙여넣기)
+$tag = (Invoke-RestMethod -Uri "https://api.github.com/repos/jayleekr/sans-kids-school-2025/releases/latest").tag_name; $url = "https://github.com/jayleekr/sans-kids-school-2025/releases/download/$tag/VibeCoding-$tag.zip"; $dest = "$env:USERPROFILE\Desktop\VibeCoding"; Write-Host "📥 최신 버전 $tag 다운로드 중..." -ForegroundColor Cyan; Invoke-WebRequest -Uri $url -OutFile "$env:TEMP\vibecoding.zip"; Expand-Archive -Path "$env:TEMP\vibecoding.zip" -DestinationPath $dest -Force; Remove-Item "$env:TEMP\vibecoding.zip"; Write-Host "✅ 다운로드 완료!" -ForegroundColor Green; Write-Host "📁 설치 위치: $dest" -ForegroundColor Yellow; Start-Process explorer $dest; if (Test-Path "$dest\start-workshop.bat") { & "$dest\start-workshop.bat" }
+```
+
+#### Mac/Linux (Terminal)
+```bash
+# 최신 Release 자동 다운로드 + 압축 해제 + 실행 (한 줄로 복사-붙여넣기)
+tag=$(curl -s https://api.github.com/repos/jayleekr/sans-kids-school-2025/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/') && url="https://github.com/jayleekr/sans-kids-school-2025/releases/download/$tag/VibeCoding-$tag.zip" && dest="$HOME/Desktop/VibeCoding" && echo "📥 최신 버전 $tag 다운로드 중..." && curl -L -o /tmp/vibecoding.zip "$url" && unzip -o /tmp/vibecoding.zip -d "$dest" && rm /tmp/vibecoding.zip && echo "✅ 다운로드 완료!" && echo "📁 설치 위치: $dest" && open "$dest" && [ -f "$dest/start-workshop.sh" ] && bash "$dest/start-workshop.sh"
+```
+
+### 방법 2: 수동 Release 다운로드
 1. [Releases 페이지](https://github.com/jayleekr/sans-kids-school-2025/releases)에서 최신 버전 다운로드
 2. ZIP 파일 압축 해제
 3. `start-workshop.bat` (Windows) 또는 `start-workshop.sh` (Mac) 실행
 4. Cursor에서 폴더 열기
 
-### 방법 2: One-Line 설치 (다운로드 없이! 🚀)
+### 방법 3: One-Line 개발 환경 설치 (Node.js 포함)
 
-#### Windows (PowerShell) - 환경 확인 포함
+#### Windows (관리자 권한 PowerShell) - Volta + Node.js + Cursor 확인
 ```powershell
-# 복사해서 PowerShell에 붙여넣기 (Cursor 확인 + 작업 폴더 생성)
-if (Get-Command cursor -EA SilentlyContinue) { Write-Host "✓ Cursor 설치됨" -ForegroundColor Green } else { Write-Host "✗ Cursor 미설치 - 다운로드 페이지를 엽니다..." -ForegroundColor Yellow; Start-Process "https://cursor.com" }; $w="$env:USERPROFILE\Desktop\VibeCoding"; New-Item -Path $w -ItemType Directory -Force | Out-Null; Write-Host "📁 작업 폴더: $w" -ForegroundColor Green; Start-Process explorer.exe $w
+# 관리자 권한 PowerShell에서 실행 (한 줄로 복사-붙여넣기)
+winget install Volta.Volta -e --silent --accept-source-agreements --accept-package-agreements; $env:Path += ";$env:USERPROFILE\.volta\bin"; volta install node@22; if (!(Get-Command cursor -EA SilentlyContinue)) { Write-Host "Cursor 다운로드 페이지를 엽니다..." -ForegroundColor Yellow; Start-Process "https://cursor.com" }; $w="$env:USERPROFILE\Desktop\VibeCoding"; New-Item $w -ItemType Directory -Force | Out-Null; Write-Host "✅ 설치 완료! Node.js: $(node -v)" -ForegroundColor Green; Write-Host "📁 작업 폴더: $w" -ForegroundColor Yellow; Start-Process explorer $w
 ```
 
-#### Mac/Linux (Terminal) - 환경 확인 포함
+#### Mac/Linux (Terminal) - Volta + Node.js + Cursor 확인
 ```bash
-# 복사해서 Terminal에 붙여넣기 (Cursor 확인 + 작업 폴더 생성)
-if command -v cursor &> /dev/null || [ -d "/Applications/Cursor.app" ]; then echo "✓ Cursor 설치됨"; else echo "✗ Cursor 미설치" && open "https://cursor.com"; fi; mkdir -p ~/Desktop/VibeCoding && cd ~/Desktop/VibeCoding && echo "📁 작업 폴더: ~/Desktop/VibeCoding" && open ~/Desktop/VibeCoding
+# Terminal에서 실행 (한 줄로 복사-붙여넣기)
+curl https://get.volta.sh | bash && export VOLTA_HOME="$HOME/.volta" && export PATH="$VOLTA_HOME/bin:$PATH" && volta install node@22 && mkdir -p ~/Desktop/VibeCoding && cd ~/Desktop/VibeCoding && echo "✅ 설치 완료! Node.js: $(node -v)" && open ~/Desktop/VibeCoding
 ```
 
-더 많은 설정 옵션이 필요하신가요? 👉 [환경 설정 가이드](workshop-materials/setup-automation/oneline-environment-setup.md)
+더 자세한 설치 가이드가 필요하신가요? 👉 [Volta 설치 가이드](workshop-materials/setup-automation/volta-install-guide.md)
 
-### 방법 3: Git Clone (개발자용)
+### 방법 4: Git Clone (개발자용)
 ```bash
 git clone https://github.com/jayleekr/sans-kids-school-2025.git
 cd sans-kids-school-2025

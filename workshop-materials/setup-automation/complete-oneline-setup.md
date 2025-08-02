@@ -1,6 +1,6 @@
-# 🚀 VibeCoding 자동 설정 가이드
+# 🚀 VibeCoding 환경 설정 One-Line 가이드
 
-한 줄 명령어로 모든 설정을 자동으로 완료합니다! (통합 버전)
+배치 파일 다운로드 없이 환경 설정을 one-line으로 실행합니다.
 
 ## 🪟 Windows 전체 자동화
 
@@ -96,11 +96,25 @@ $vibe="$env:USERPROFILE\Desktop\VibeCoding"; Write-Host "`n=== VibeCoding 자동
 '@; $game | Out-File -FilePath "game.html" -Encoding UTF8; Write-Host "✓ 게임 템플릿 생성됨: game.html" -ForegroundColor Green; Write-Host "`n=== 설정 완료! ===" -ForegroundColor Green; Write-Host "1. Cursor 실행" -ForegroundColor Yellow; Write-Host "2. File > Open Folder > $vibe 선택" -ForegroundColor Yellow; Write-Host "3. game.html 더블클릭으로 실행!" -ForegroundColor Yellow; Start-Process explorer.exe $vibe; Start-Process "game.html"
 ```
 
-### 🎯 간단 버전 (폴더만 생성)
+### 🎯 Windows - 기본 설정 (폴더 + Cursor Rules)
 ```powershell
-# 최소 설정 버전
-$v="$env:USERPROFILE\Desktop\VibeCoding"; New-Item $v -ItemType Directory -Force | Out-Null; Write-Host "폴더: $v" -ForegroundColor Green; Start-Process explorer $v
-```
+# 작업 폴더 생성 및 기본 Cursor Rules 설정
+$w="$env:USERPROFILE\Desktop\VibeCoding"; New-Item $w -ItemType Directory -Force | Out-Null; Set-Location $w; '자 🎮 VibeCoding AI Assistant Rules
+
+나는 8-16세 어린이들이 HTML5 Canvas로 게임을 만들 수 있도록 도와주는 AI 조수입니다.
+
+## 핵심 원칙
+1. 항상 한국어로 설명해요
+2. 코드는 간단하고 이해하기 쉽게 작성해요
+3. 재미있는 이모지를 사용해요 😄
+4. 디버깅하지 말고 항상 작동하는 코드를 제공해요
+5. 창의성과 실험을 격려해요
+
+## 응답 스타일
+- "잘하고 있어요!" 로 시작해요
+- 코드가 무엇을 하는지 쉽게 설명해요
+- 재미있는 수정 아이디어를 제안해요
+- "다음에 뭘 해볼까요?" 로 끝내요' | Out-File ".cursorrules" -Encoding UTF8; Write-Host "✅ 작업 폴더 및 Cursor Rules 생성 완료!" -ForegroundColor Green; Start-Process explorer $w
 
 ## 🍎 Mac/Linux 전체 자동화
 
@@ -197,24 +211,30 @@ EOF
 echo "✓ 게임 템플릿 생성됨: game.html" && echo -e "\n=== 설정 완료! ===" && echo "1. Cursor 실행" && echo "2. File > Open Folder > $vibe 선택" && echo "3. game.html 더블클릭으로 실행!" && open "$vibe" && open "game.html"
 ```
 
-### 🎯 간단 버전 (폴더만 생성)
+### 🎯 Mac/Linux - 기본 폴더 생성
 ```bash
-# 최소 설정 버전
-mkdir -p ~/Desktop/VibeCoding && cd ~/Desktop/VibeCoding && echo "폴더: $(pwd)" && open .
+# 작업 폴더만 빠르게 생성
+mkdir -p ~/Desktop/VibeCoding && cd ~/Desktop/VibeCoding && echo "📁 작업 폴더: $(pwd)" && open .
 ```
 
 ## 🌟 특별 기능 버전
 
-### 🎨 Windows - AI 룰 생성기 포함 버전
+### 🎨 Windows - Volta 간단 설치 (PATH 자동 설정)
 ```powershell
-# AI 룰 생성기 HTML도 함께 생성
-$vibe="$env:USERPROFILE\Desktop\VibeCoding"; New-Item -Path $vibe -ItemType Directory -Force | Out-Null; Set-Location $vibe; Invoke-WebRequest -Uri "https://raw.githubusercontent.com/jayleekr/sans-kids-school-2025/main/ai-rules-generator.html" -OutFile "ai-rules-generator.html"; Invoke-WebRequest -Uri "https://raw.githubusercontent.com/jayleekr/sans-kids-school-2025/main/sandbox-environments/game-template-starter.html" -OutFile "game.html"; Write-Host "✓ AI 룰 생성기와 게임 템플릿 다운로드 완료!" -ForegroundColor Green; Start-Process "ai-rules-generator.html"; Start-Process explorer.exe $vibe
+# Volta 설치 + PATH 설정 + Node.js 설치 + 작업 폴더
+winget install Volta.Volta -e --silent --accept-source-agreements --accept-package-agreements; $env:Path += ";$env:USERPROFILE\.volta\bin"; volta install node@22; $w="$env:USERPROFILE\Desktop\VibeCoding"; New-Item $w -ItemType Directory -Force | Out-Null; Write-Host "✅ Node.js $(node -v) 설치 완료!" -ForegroundColor Green; Write-Host "📁 작업 폴더: $w" -ForegroundColor Yellow; Start-Process explorer $w
 ```
 
-### 🎨 Mac/Linux - AI 룰 생성기 포함 버전
+### 🎨 Mac/Linux - Volta 간단 설치 (PATH 자동 설정)
 ```bash
-# AI 룰 생성기 HTML도 함께 생성
-vibe="$HOME/Desktop/VibeCoding" && mkdir -p "$vibe" && cd "$vibe" && curl -s "https://raw.githubusercontent.com/jayleekr/sans-kids-school-2025/main/ai-rules-generator.html" -o "ai-rules-generator.html" && curl -s "https://raw.githubusercontent.com/jayleekr/sans-kids-school-2025/main/sandbox-environments/game-template-starter.html" -o "game.html" && echo "✓ AI 룰 생성기와 게임 템플릿 다운로드 완료!" && open "ai-rules-generator.html" && open "$vibe"
+# Volta 설치 + PATH 설정 + Node.js 설치 + 작업 폴더
+curl https://get.volta.sh | bash && export VOLTA_HOME="$HOME/.volta" && export PATH="$VOLTA_HOME/bin:$PATH" && volta install node@22 && mkdir -p ~/Desktop/VibeCoding && cd ~/Desktop/VibeCoding && echo "✅ Node.js $(node -v) 설치 완료!" && echo "📁 작업 폴더: $(pwd)" && open .
+```
+
+### 🔍 설치 확인 명령어
+```powershell
+# Windows - 설치된 도구 확인
+$tools = @{Volta=(Get-Command volta -EA SilentlyContinue) -ne $null; Node=(Get-Command node -EA SilentlyContinue) -ne $null; Cursor=(Get-Command cursor -EA SilentlyContinue) -ne $null}; foreach($t in $tools.Keys) { if($tools[$t]) { Write-Host "✓ $t 설치됨" -ForegroundColor Green } else { Write-Host "✗ $t 미설치" -ForegroundColor Red } }; if ($tools.Node) { Write-Host "Node.js: $(node -v)" -ForegroundColor Cyan }
 ```
 
 ## 💡 사용 팁

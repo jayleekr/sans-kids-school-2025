@@ -74,7 +74,7 @@ if %errorLevel% == 0 (
 echo.
 echo [5/6] ⚙️  Cursor MCP 설정 중...
 
-:: 프로젝트 루트의 .cursor 디렉토리에 MCP 설정 파일 생성
+:: 프로젝트 루트의 .cursor 디렉토리에 MCP 설정 파일 생성ㄷ
 cd /d "%PROJECT_DIR%"
 if not exist ".cursor" mkdir .cursor
 

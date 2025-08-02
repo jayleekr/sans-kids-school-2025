@@ -91,7 +91,7 @@ function drawPlayer() {
     
     // Face
     ctx.fillStyle = '#FFD700';
-    ctx.beginPath();
+    ctx.beginPath();R
     ctx.arc(player.x + 25, player.y + 20, 15, 0, Math.PI * 2);
     ctx.fill();
     
