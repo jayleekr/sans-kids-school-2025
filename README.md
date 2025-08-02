@@ -38,22 +38,26 @@ chmod +x workshop-materials/setup-automation/setup-mac.sh
 ```
 
 설치 내용:
-- VS Code + Cursor
+- Cursor (AI 코드 에디터)
 - Live Server 확장
 - MCP Playwright (브라우저 자동화)
 - 프로젝트 폴더 구조
 
 ### 2. 게임 개발 시작
 
-1. **시작 템플릿**: `sandbox-environments/game-template-starter.html`
+1. **AI와 대화 시작하기** (2가지 방법):
+   - **방법 A (추천)**: `instant-start-prompts.md`에서 적합한 프롬프트 복사 → Cursor에 붙여넣기
+   - **방법 B (고급)**: AI 룰 생성기로 맞춤 설정 후 시작
+
+2. **템플릿 열기**: `sandbox-environments/game-template-starter.html`
    - 모든 연령대가 동일한 템플릿으로 시작
    - AI와의 대화를 통해 복잡도 조절
 
-2. **실행 방법**:
+3. **실행 방법**:
    - 방법 1: HTML 파일 우클릭 → "Open with Live Server"
    - 방법 2: `Ctrl+Shift+P` → "MCP: Open Browser" (자동화)
 
-3. **개발 사이클**: 코드 수정 → 저장(Ctrl+S) → 자동 새로고침 → 결과 확인
+4. **개발 사이클**: 대화 → 코드 생성 → 저장(Ctrl+S) → 자동 새로고침 → 결과 확인
 
 ## 📚 프로젝트 구조
 

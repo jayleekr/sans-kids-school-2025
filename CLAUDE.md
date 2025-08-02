@@ -1,91 +1,92 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+이 파일은 Claude Code (claude.ai/code)가 이 저장소의 코드를 작업할 때 필요한 가이드를 제공합니다.
 
-## Project Overview
+## 프로젝트 개요
 
-VibeCoding is an educational workshop system designed to teach children (ages 8-16) game development using Cursor and AI collaboration. The project emphasizes "problem setting, decomposition, and AI management skills" rather than traditional programming knowledge.
+VibeCoding은 8-16세 아이들에게 Cursor와 AI 협업을 통한 게임 개발을 가르치는 교육 워크숍 시스템입니다. 이 프로젝트는 전통적인 프로그래밍 지식보다 "문제 설정, 분해, AI 관리 능력"을 강조합니다.
 
-## Core Philosophy
+## 핵심 철학
 
-- **No Debugging for Kids**: Children should never need to debug. Games must continue running even with errors.
-- **Immediate Feedback**: Code changes should be visible within 10 seconds (save → auto-refresh → see results).
-- **Single HTML File Strategy**: All code (HTML, CSS, JavaScript) in one file to eliminate build complexity.
-- **Error-Proof Architecture**: Use try-catch blocks, default values, and fail-safe mechanisms.
+- **아이들을 위한 디버깅 금지**: 아이들은 절대 디버깅할 필요가 없어야 합니다. 게임은 에러가 있어도 계속 실행되어야 합니다.
+- **즉각적인 피드백**: 코드 변경사항은 10초 내에 보여야 합니다 (저장 → 자동 새로고침 → 결과 확인).
+- **단일 HTML 파일 전략**: 빌드 복잡성을 제거하기 위해 모든 코드(HTML, CSS, JavaScript)를 하나의 파일에 포함.
+- **에러 방지 아키텍처**: try-catch 블록, 기본값, 실패 방지 메커니즘 사용.
+- **한국어 문서화 표준**: 모든 문서, 주석, 사용자 대면 텍스트, 워크숍 자료는 한국 아이들과 진행자의 접근성을 위해 한국어로 작성되어야 합니다.
 
-## Architecture Overview
+## 아키텍처 개요
 
-### Repository Structure
+### 저장소 구조
 ```
-├── workflows/                    # 5 teaching approaches (Cursor Rules variants)
-│   ├── workflow-1-friendly-teacher/    # Encouragement-focused
-│   ├── workflow-2-problem-solver/      # Socratic method
-│   ├── workflow-3-quick-implementation/ # Fast results
-│   ├── workflow-4-storytelling/        # Narrative-driven
-│   └── workflow-5-checklist/           # Systematic approach
-├── sandbox-environments/         # Development templates & tools
-├── workshop-materials/          # Facilitator guides & automation
-└── evaluation/                  # Assessment criteria
+├── workflows/                    # 5가지 교육 접근법 (Cursor Rules 변형)
+│   ├── workflow-1-friendly-teacher/    # 격려 중심
+│   ├── workflow-2-problem-solver/      # 소크라테스 방식
+│   ├── workflow-3-quick-implementation/ # 빠른 결과
+│   ├── workflow-4-storytelling/        # 서사 중심
+│   └── workflow-5-checklist/           # 체계적 접근
+├── sandbox-environments/         # 개발 템플릿 및 도구
+├── workshop-materials/          # 진행자 가이드 및 자동화
+└── evaluation/                  # 평가 기준
 ```
 
-### Workflow System
-The project implements 5 different AI teaching personalities through Cursor Rules files. Each workflow targets different learning styles:
-- Ages 8-10: Friendly Teacher or Storytelling
-- Ages 11-13: Problem Solver or Checklist  
-- Ages 14-16: Quick Implementation or Problem Solver
+### 워크플로우 시스템
+이 프로젝트는 Cursor Rules 파일을 통해 5가지 다른 AI 교육 성격을 구현합니다. 각 워크플로우는 다른 학습 스타일을 대상으로 합니다:
+- 8-10세: 친절한 선생님 또는 스토리텔링
+- 11-13세: 문제 해결 코치 또는 체크리스트  
+- 14-16세: 빠른 구현 또는 문제 해결 코치
 
-## Development Commands
+## 개발 명령어
 
-### Environment Setup
+### 환경 설정
 ```bash
-# Windows (run as administrator) - Now includes MCP Playwright
+# Windows (관리자 권한으로 실행) - MCP Playwright 포함
 workshop-materials/setup-automation/setup-windows.bat
 
-# Mac/Linux - Now includes MCP Playwright
+# Mac/Linux - MCP Playwright 포함
 chmod +x workshop-materials/setup-automation/setup-mac.sh
 ./workshop-materials/setup-automation/setup-mac.sh
 ```
 
-### MCP Integration
-The setup scripts now automatically install and configure MCP Playwright for:
-- **Automated browser launching**: `Ctrl+Shift+P` → "MCP: Open Browser"
-- **Game testing automation**: AI can automatically test game functions
-- **Screenshot capture**: Automatic game progress documentation
-- **Enhanced workflow**: Code → Save → MCP auto-test → Visual feedback
+### MCP 통합
+설정 스크립트는 이제 MCP Playwright를 자동으로 설치하고 구성합니다:
+- **자동 브라우저 실행**: `Ctrl+Shift+P` → "MCP: Open Browser"
+- **게임 테스트 자동화**: AI가 자동으로 게임 기능을 테스트할 수 있습니다
+- **스크린샷 캡처**: 자동 게임 진행 상황 문서화
+- **향상된 워크플로우**: 코드 → 저장 → MCP 자동 테스트 → 시각적 피드백
 
-### Game Development Workflow
-1. **Start with base template**: Use `sandbox-environments/sandbox-simple-html.html`
-2. **Launch options**:
-   - **Method 1**: Right-click HTML file → "Open with Live Server"
-   - **Method 2**: `Ctrl+Shift+P` → "MCP: Open Browser" (automated)
-3. **Enhanced development cycle**: Edit code → Save (Ctrl+S) → MCP auto-test → Visual feedback
-4. **Screen layout**: Cursor (50%) + Browser (50%) side-by-side
+### 게임 개발 워크플로우
+1. **기본 템플릿으로 시작**: `sandbox-environments/game-template-starter.html` 사용
+2. **실행 옵션**:
+   - **방법 1**: HTML 파일 우클릭 → "Open with Live Server"
+   - **방법 2**: `Ctrl+Shift+P` → "MCP: Open Browser" (자동화)
+3. **향상된 개발 사이클**: 코드 편집 → 저장 (Ctrl+S) → MCP 자동 테스트 → 시각적 피드백
+4. **화면 레이아웃**: Cursor (50%) + 브라우저 (50%) 나란히 배치
 
-### Testing Workflows
-To test different teaching approaches:
-1. Copy contents from `workflows/[workflow-name]/cursor-rules.md`
-2. Paste into Cursor's `.cursorrules` file
-3. Test with game development scenario: "바나나 히어로의 모험" (Banana Hero Adventure)
-4. Use questions from `workshop-materials/expected-questions.md`
+### 워크플로우 테스트
+다른 교육 접근법을 테스트하려면:
+1. `workflows/[workflow-name]/cursor-rules.md`에서 내용 복사
+2. Cursor의 `.cursorrules` 파일에 붙여넣기
+3. "바나나 히어로의 모험" 게임 개발 시나리오로 테스트
+4. `workshop-materials/expected-questions.md`의 질문 사용
 
-## Key Technical Constraints
+## 주요 기술적 제약사항
 
-### Required Technologies
-- **Single HTML files only** - no separate CSS/JS files
-- **Canvas API** for graphics (avoid complex frameworks)
-- **Inline styles** and scripts
-- **CDN libraries only** (p5.js allowed for intermediate level)
+### 필수 기술
+- **단일 HTML 파일만 사용** - 별도의 CSS/JS 파일 없음
+- **Canvas API** 그래픽 사용 (복잡한 프레임워크 피하기)
+- **인라인 스타일** 및 스크립트
+- **CDN 라이브러리만 사용** (중급 레벨에서는 p5.js 허용)
 
-### Forbidden Technologies
-- Node.js, npm, yarn, or any build tools
-- Separate asset files
-- Server-side functionality
-- Complex frameworks (React, Vue, etc.)
-- Database connections
+### 금지된 기술
+- Node.js, npm, yarn 또는 모든 빌드 도구
+- 별도의 에셋 파일
+- 서버 측 기능
+- 복잡한 프레임워크 (React, Vue 등)
+- 데이터베이스 연결
 
-### Error Prevention Patterns
+### 에러 방지 패턴
 ```javascript
-// Always wrap game logic in try-catch
+// 항상 게임 로직을 try-catch로 감싸기
 function safeGameLoop() {
     try {
         updateGame();
@@ -96,10 +97,10 @@ function safeGameLoop() {
     requestAnimationFrame(safeGameLoop);
 }
 
-// Use default values everywhere
+// 모든 곳에서 기본값 사용
 const hero = hero || { x: 100, y: 300, size: 50 };
 
-// Replace console.log with visual feedback
+// console.log를 시각적 피드백으로 대체
 function showMessage(text) {
     document.getElementById('status').innerText = text;
 }

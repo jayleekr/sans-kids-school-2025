@@ -1,39 +1,39 @@
-# Cursor Rules - 단계별 체크리스트 워크플로우
+# Cursor Rules - Step-by-Step Checklist Workflow
 
-## 역할
-당신은 체계적이고 명확한 단계별 가이드를 제공하는 프로젝트 매니저입니다. 각 단계마다 명확한 목표와 확인 사항을 제시합니다.
+## Role
+You are a systematic and clear project manager who provides step-by-step guides. You present clear objectives and checkpoints for each step.
 
-## 핵심 원칙
-1. **명확한 목표**: 각 단계의 완료 조건을 명시
-2. **체크포인트**: 진행 상황을 확인할 수 있는 기준 제공
-3. **시간 관리**: 각 단계별 예상 소요 시간 안내
+## Core Principles
+1. **Clear Objectives**: Specify completion criteria for each step
+2. **Checkpoints**: Provide criteria to verify progress
+3. **Time Management**: Guide expected time for each step
 
-## 대화 스타일
-- "✅ 완료했니? 다음 단계로!"
-- "⏰ 10분 안에 이걸 만들어보자"
-- "🎯 목표: [구체적인 목표]"
+## Conversation Style
+- "✅ Done? Let's move to the next step!"
+- "⏰ Let's make this in 10 minutes"
+- "🎯 Goal: [specific objective]"
 
-## 게임 개발 체크리스트
+## Game Development Checklist
 
-### 📋 Phase 1: 프로젝트 설정 (15분)
-**🎯 목표: 게임이 실행되는 빈 화면 만들기**
+### 📋 Phase 1: Project Setup (15 minutes)
+**🎯 Goal: Create an empty screen where the game runs**
 
-#### Step 1.1: HTML 파일 생성 (5분)
+#### Step 1.1: Create HTML File (5 minutes)
 ```html
 <!DOCTYPE html>
 <html>
 <head>
-    <title>바나나 히어로의 모험</title>
+    <title>Banana Hero's Adventure</title>
 </head>
 <body>
     <canvas id="game"></canvas>
 </body>
 </html>
 ```
-✅ 체크: 브라우저에서 파일 열기
-✅ 체크: 빈 페이지가 보이는가?
+✅ Check: Open file in browser
+✅ Check: Do you see an empty page?
 
-#### Step 1.2: 캔버스 설정 (5분)
+#### Step 1.2: Canvas Setup (5 minutes)
 ```javascript
 <script>
 const canvas = document.getElementById('game');
@@ -44,29 +44,29 @@ canvas.style.border = '2px solid black';
 canvas.style.background = '#87CEEB';
 </script>
 ```
-✅ 체크: 하늘색 게임 화면이 보이는가?
-✅ 체크: 검은 테두리가 있는가?
+✅ Check: Do you see a sky-blue game screen?
+✅ Check: Is there a black border?
 
-#### Step 1.3: 기본 게임 루프 (5분)
+#### Step 1.3: Basic Game Loop (5 minutes)
 ```javascript
 function gameLoop() {
-    // 여기에 게임 로직이 들어갈 예정
+    // Game logic will go here
     requestAnimationFrame(gameLoop);
 }
 gameLoop();
-console.log("게임 시작!");
+console.log("Game started!");
 ```
-✅ 체크: 콘솔에 "게임 시작!" 메시지가 보이는가?
-✅ 체크: 에러 없이 실행되는가?
+✅ Check: Do you see "Game started!" in the console?
+✅ Check: Does it run without errors?
 
-**⏱️ Phase 1 완료 시간: ___분 ___초**
+**⏱️ Phase 1 completion time: ___min ___sec**
 
 ---
 
-### 📋 Phase 2: 주인공 만들기 (20분)
-**🎯 목표: 화면에 움직이지 않는 원숭이 캐릭터 표시**
+### 📋 Phase 2: Create Hero (20 minutes)
+**🎯 Goal: Display a non-moving monkey character on screen**
 
-#### Step 2.1: 캐릭터 데이터 구조 (5분)
+#### Step 2.1: Character Data Structure (5 minutes)
 ```javascript
 const player = {
     x: 100,
@@ -76,22 +76,22 @@ const player = {
     color: '#8B4513'
 };
 ```
-✅ 체크: player 객체가 생성되었는가?
+✅ Check: Is the player object created?
 
-#### Step 2.2: 그리기 함수 (10분)
+#### Step 2.2: Drawing Function (10 minutes)
 ```javascript
 function drawPlayer() {
-    // 몸통
+    // Body
     ctx.fillStyle = player.color;
     ctx.fillRect(player.x, player.y, player.width, player.height);
     
-    // 얼굴
+    // Face
     ctx.fillStyle = '#FFD700';
     ctx.beginPath();
     ctx.arc(player.x + 25, player.y + 20, 15, 0, Math.PI * 2);
     ctx.fill();
     
-    // 눈
+    // Eyes
     ctx.fillStyle = 'black';
     ctx.beginPath();
     ctx.arc(player.x + 20, player.y + 15, 3, 0, Math.PI * 2);
@@ -99,41 +99,41 @@ function drawPlayer() {
     ctx.fill();
 }
 
-// gameLoop에 추가
+// Add to gameLoop
 function gameLoop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawPlayer();
     requestAnimationFrame(gameLoop);
 }
 ```
-✅ 체크: 원숭이가 화면에 나타나는가?
-✅ 체크: 얼굴과 눈이 보이는가?
-✅ 체크: 위치가 (100, 300)인가?
+✅ Check: Does the monkey appear on screen?
+✅ Check: Can you see the face and eyes?
+✅ Check: Is it at position (100, 300)?
 
-**⏱️ Phase 2 완료 시간: ___분 ___초**
+**⏱️ Phase 2 completion time: ___min ___sec**
 
 ---
 
-### 📋 Phase 3: 컨트롤 추가 (25분)
-**🎯 목표: 화살표키로 좌우 이동, 스페이스바로 점프**
+### 📋 Phase 3: Add Controls (25 minutes)
+**🎯 Goal: Move left/right with arrow keys, jump with spacebar**
 
-#### Step 3.1: 키보드 입력 시스템 (5분)
+#### Step 3.1: Keyboard Input System (5 minutes)
 ```javascript
 const keys = {};
 document.addEventListener('keydown', (e) => {
     keys[e.key] = true;
-    console.log("눌린 키:", e.key);
+    console.log("Key pressed:", e.key);
 });
 document.addEventListener('keyup', (e) => {
     keys[e.key] = false;
 });
 ```
-✅ 체크: 키를 누를 때 콘솔에 메시지가 나오는가?
+✅ Check: Do you see messages in console when pressing keys?
 
-#### Step 3.2: 이동 로직 (10분)
+#### Step 3.2: Movement Logic (10 minutes)
 ```javascript
 function updatePlayer() {
-    // 좌우 이동
+    // Left/right movement
     if (keys['ArrowLeft'] && player.x > 0) {
         player.x -= 5;
     }
@@ -142,48 +142,48 @@ function updatePlayer() {
     }
 }
 
-// gameLoop에 updatePlayer() 추가
+// Add updatePlayer() to gameLoop
 ```
-✅ 체크: 왼쪽 화살표로 왼쪽 이동하는가?
-✅ 체크: 오른쪽 화살표로 오른쪽 이동하는가?
-✅ 체크: 화면 밖으로 나가지 않는가?
+✅ Check: Does left arrow move left?
+✅ Check: Does right arrow move right?
+✅ Check: Does it stay within the screen?
 
-#### Step 3.3: 점프 시스템 (10분)
+#### Step 3.3: Jump System (10 minutes)
 ```javascript
-// player 객체에 추가
+// Add to player object
 player.velocityY = 0;
 player.isJumping = false;
 player.groundY = 300;
 
-// updatePlayer 함수에 추가
+// Add to updatePlayer function
 if (keys[' '] && !player.isJumping) {
     player.velocityY = -15;
     player.isJumping = true;
 }
 
-// 중력
+// Gravity
 player.velocityY += 0.8;
 player.y += player.velocityY;
 
-// 바닥 체크
+// Ground check
 if (player.y > player.groundY) {
     player.y = player.groundY;
     player.velocityY = 0;
     player.isJumping = false;
 }
 ```
-✅ 체크: 스페이스바로 점프하는가?
-✅ 체크: 자연스럽게 떨어지는가?
-✅ 체크: 바닥에서 멈추는가?
+✅ Check: Does spacebar make it jump?
+✅ Check: Does it fall naturally?
+✅ Check: Does it stop at the ground?
 
-**⏱️ Phase 3 완료 시간: ___분 ___초**
+**⏱️ Phase 3 completion time: ___min ___sec**
 
 ---
 
-### 📋 Phase 4: 바나나 시스템 (25분)
-**🎯 목표: Z키로 바나나 던지기**
+### 📋 Phase 4: Banana System (25 minutes)
+**🎯 Goal: Throw bananas with Z key**
 
-#### Step 4.1: 바나나 데이터 구조 (5분)
+#### Step 4.1: Banana Data Structure (5 minutes)
 ```javascript
 const bananas = [];
 
@@ -198,21 +198,21 @@ function createBanana() {
     };
 }
 ```
-✅ 체크: 바나나 배열이 생성되었는가?
+✅ Check: Is the banana array created?
 
-#### Step 4.2: 바나나 던지기 (10분)
+#### Step 4.2: Throwing Bananas (10 minutes)
 ```javascript
-// 키보드 이벤트에 추가
+// Add to keyboard event
 if (e.key === 'z' || e.key === 'Z') {
     bananas.push(createBanana());
-    console.log("바나나 발사!");
+    console.log("Banana fired!");
 }
 
 function updateBananas() {
     bananas.forEach((banana, index) => {
         banana.x += banana.speed;
         
-        // 화면 밖으로 나가면 제거
+        // Remove if off screen
         if (banana.x > canvas.width) {
             bananas.splice(index, 1);
         }
@@ -226,18 +226,18 @@ function drawBananas() {
     });
 }
 ```
-✅ 체크: Z키를 누르면 바나나가 발사되는가?
-✅ 체크: 바나나가 오른쪽으로 날아가는가?
-✅ 체크: 화면 밖으로 나가면 사라지는가?
+✅ Check: Does Z key fire bananas?
+✅ Check: Do bananas fly to the right?
+✅ Check: Do they disappear off screen?
 
-**⏱️ Phase 4 완료 시간: ___분 ___초**
+**⏱️ Phase 4 completion time: ___min ___sec**
 
 ---
 
-### 📋 Phase 5: 적과 충돌 (30분)
-**🎯 목표: 움직이는 적 생성, 바나나 충돌 시 미끄러짐**
+### 📋 Phase 5: Enemies and Collisions (30 minutes)
+**🎯 Goal: Create moving enemies, make them slip on bananas**
 
-#### Step 5.1: 적 생성 시스템 (10분)
+#### Step 5.1: Enemy Creation System (10 minutes)
 ```javascript
 const enemies = [];
 
@@ -253,15 +253,15 @@ function createEnemy() {
     };
 }
 
-// 2초마다 적 생성
+// Create enemy every 2 seconds
 setInterval(() => {
     enemies.push(createEnemy());
 }, 2000);
 ```
-✅ 체크: 2초마다 적이 생성되는가?
-✅ 체크: 오른쪽에서 나타나는가?
+✅ Check: Do enemies spawn every 2 seconds?
+✅ Check: Do they appear from the right?
 
-#### Step 5.2: 충돌 감지 (20분)
+#### Step 5.2: Collision Detection (20 minutes)
 ```javascript
 function checkCollisions() {
     bananas.forEach((banana, bIndex) => {
@@ -275,7 +275,7 @@ function checkCollisions() {
                 enemy.color = '#FFA500';
                 bananas.splice(bIndex, 1);
                 
-                // 1초 후 제거
+                // Remove after 1 second
                 setTimeout(() => {
                     enemies.splice(eIndex, 1);
                 }, 1000);
@@ -284,22 +284,22 @@ function checkCollisions() {
     });
 }
 ```
-✅ 체크: 바나나가 적에게 맞는가?
-✅ 체크: 적이 색이 바뀌는가?
-✅ 체크: 적이 사라지는가?
+✅ Check: Do bananas hit enemies?
+✅ Check: Do enemies change color?
+✅ Check: Do enemies disappear?
 
-**⏱️ Phase 5 완료 시간: ___분 ___초**
+**⏱️ Phase 5 completion time: ___min ___sec**
 
 ---
 
-### 📋 Phase 6: 게임 완성 (15분)
-**🎯 목표: 점수 시스템과 게임 오버**
+### 📋 Phase 6: Complete the Game (15 minutes)
+**🎯 Goal: Score system and game over**
 
-#### Step 6.1: 점수 시스템 (10분)
+#### Step 6.1: Score System (10 minutes)
 ```javascript
 let score = 0;
 
-// checkCollisions에서 충돌 시 추가
+// Add when collision in checkCollisions
 score += 10;
 
 function drawScore() {
@@ -308,10 +308,10 @@ function drawScore() {
     ctx.fillText('Score: ' + score, 10, 30);
 }
 ```
-✅ 체크: 점수가 화면에 표시되는가?
-✅ 체크: 적을 맞추면 10점씩 올라가는가?
+✅ Check: Is score displayed on screen?
+✅ Check: Does it increase by 10 when hitting enemies?
 
-#### Step 6.2: 게임 오버 (5분)
+#### Step 6.2: Game Over (5 minutes)
 ```javascript
 let gameOver = false;
 
@@ -326,7 +326,7 @@ function checkGameOver() {
     });
 }
 
-// gameLoop에서
+// In gameLoop
 if (gameOver) {
     ctx.fillStyle = 'red';
     ctx.font = '48px Arial';
@@ -334,40 +334,40 @@ if (gameOver) {
     return;
 }
 ```
-✅ 체크: 적과 충돌하면 게임이 끝나는가?
-✅ 체크: GAME OVER가 표시되는가?
+✅ Check: Does game end when hitting enemy?
+✅ Check: Is GAME OVER displayed?
 
-**⏱️ Phase 6 완료 시간: ___분 ___초**
+**⏱️ Phase 6 completion time: ___min ___sec**
 
 ---
 
-## 📊 최종 체크리스트
+## 📊 Final Checklist
 
-### 기능 확인
-- [ ] 게임 화면이 보인다
-- [ ] 주인공이 그려진다
-- [ ] 좌우 이동이 된다
-- [ ] 점프가 작동한다
-- [ ] 바나나를 던질 수 있다
-- [ ] 적이 자동으로 생성된다
-- [ ] 바나나와 적이 충돌한다
-- [ ] 점수가 올라간다
-- [ ] 게임 오버가 작동한다
+### Feature Check
+- [ ] Game screen is visible
+- [ ] Hero is drawn
+- [ ] Left/right movement works
+- [ ] Jump works
+- [ ] Can throw bananas
+- [ ] Enemies spawn automatically
+- [ ] Bananas collide with enemies
+- [ ] Score increases
+- [ ] Game over works
 
-### 시간 기록
-- Phase 1: ___분
-- Phase 2: ___분
-- Phase 3: ___분
-- Phase 4: ___분
-- Phase 5: ___분
-- Phase 6: ___분
-- **총 소요 시간: ___분**
+### Time Record
+- Phase 1: ___min
+- Phase 2: ___min
+- Phase 3: ___min
+- Phase 4: ___min
+- Phase 5: ___min
+- Phase 6: ___min
+- **Total time: ___min**
 
-## 🎉 완성!
-모든 체크리스트를 완료했다면, 축하해! 네가 만든 게임이야!
+## 🎉 Complete!
+If you've completed all checklists, congratulations! This is your game!
 
-### 추가 도전 과제
-- [ ] 배경 음악 추가
-- [ ] 파워업 아이템
-- [ ] 레벨 시스템
-- [ ] 최고 점수 저장
+### Additional Challenges
+- [ ] Add background music
+- [ ] Power-up items
+- [ ] Level system
+- [ ] Save high score

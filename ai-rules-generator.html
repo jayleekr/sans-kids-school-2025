@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibeCoding AI 룰 생성기 - 우리 아이를 위한 맞춤 AI 선생님</title>
+    <style>
+        body { 
+            font-family: 'Noto Sans KR', Arial, sans-serif; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 20px;
+            background: #f0f8ff;
+            line-height: 1.6;
+        }
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+        .question {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: 500;
+        }
+        .option {
+            padding: 15px 20px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .option:hover {
+            background: #e3f2fd;
+            border-color: #2196f3;
+            transform: translateY(-2px);
+        }
+        .option.selected {
+            background: #bbdefb;
+            border-color: #1976d2;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .emoji {
+            font-size: 24px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background: #45a049;
+            transform: scale(1.05);
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: scale(1);
+        }
+        #result {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            white-space: pre-wrap;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+            display: none;
+            position: relative;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .copy-button {
+            background: #2196f3;
+            padding: 10px 20px;
+            font-size: 14px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            border-radius: 5px;
+        }
+        .copy-button:hover {
+            background: #1976d2;
+        }
+        .progress {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background: #4CAF50;
+            border-radius: 4px;
+            transition: width 0.3s;
+            width: 0%;
+        }
+        .info-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4CAF50;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .card {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+            .question {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🎮 VibeCoding AI 선생님 만들기</h1>
+        <p class="subtitle">AI가 우리 아이에게 맞는 방식으로 게임 만들기를 가르치도록 설정해보세요!</p>
+        
+        <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="question">1. 우리 아이의 나이는?</div>
+        <div class="option" onclick="selectOption(this, 'age', '8-10')">
+            <span class="emoji">🧒</span>
+            <div>
+                <strong>8-10세 (초등 저학년)</strong>
+                <small style="display: block; color: #666;">쉽고 재미있게 배워요</small>
+            </div>
+        </div>
+        <div class="option" onclick="selectOption(this, 'age', '11-13')">
+            <span class="emoji">👦</span>
+            <div>
+                <strong>11-13세 (초등 고학년)</strong>
+                <small style="display: block; color: #666;">논리적으로 생각해요</small>
+            </div>
+        </div>
+        <div class="option" onclick="selectOption(this, 'age', '14-16')">
+            <span class="emoji">🧑</span>
+            <div>
+                <strong>14-16세 (중학생)</strong>
+                <small style="display: block; color: #666;">더 깊이 배워요</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="question">2. 우리 아이의 성격은?</div>
+        <div class="option" onclick="selectOption(this, 'personality', 'shy')">
+            <span class="emoji">🌸</span>
+            <div>
+                <strong>수줍음이 많고 격려가 필요해요</strong>
+                <small style="display: block; color: #666;">친절한 선생님이 도와줄게요</small>
+            </div>
+        </div>
+        <div class="option" onclick="selectOption(this, 'personality', 'curious')">
+            <span class="emoji">🔍</span>
+            <div>
+                <strong>호기심이 많고 "왜?"를 자주 물어요</strong>
+                <small style="display: block; color: #666;">함께 생각하며 배워요</small>
+            </div>
+        </div>
+        <div class="option" onclick="selectOption(this, 'personality', 'active')">
+            <span class="emoji">⚡</span>
+            <div>
+                <strong>활발하고 빠른 결과를 원해요</strong>
+                <small style="display: block; color: #666;">바로 실행해볼 수 있어요</small>
+            </div>
+        </div>
+        <div class="option" onclick="selectOption(this, 'personality', 'creative')">
+            <span class="emoji">🎨</span>
+            <div>
+                <strong>상상력이 풍부하고 이야기를 좋아해요</strong>
+                <small style="display: block; color: #666;">모험 이야기로 배워요</small>
+            </div>
+        </div>
+        <div class="option" onclick="selectOption(this, 'personality', 'systematic')">
+            <span class="emoji">📋</span>
+            <div>
+                <strong>계획적이고 단계별로 하는 걸 좋아해요</strong>
+                <small style="display: block; color: #666;">체계적으로 완성해요</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="question">3. 코딩 경험은?</div>
+        <div class="option" onclick="selectOption(this, 'experience', 'none')">
+            <span class="emoji">🌱</span>
+            <div>
+                <strong>처음이에요</strong>
+                <small style="display: block; color: #666;">기초부터 차근차근</small>
+            </div>
+        </div>
+        <div class="option" onclick="selectOption(this, 'experience', 'some')">
+            <span class="emoji">🌿</span>
+            <div>
+                <strong>스크래치나 엔트리를 해봤어요</strong>
+                <small style="display: block; color: #666;">블록 코딩 경험 있음</small>
+            </div>
+        </div>
+        <div class="option" onclick="selectOption(this, 'experience', 'experienced')">
+            <span class="emoji">🌳</span>
+            <div>
+                <strong>간단한 프로그래밍을 할 수 있어요</strong>
+                <small style="display: block; color: #666;">텍스트 코딩 가능</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="question">4. 만들고 싶은 게임은?</div>
+        <div class="option" onclick="selectOption(this, 'game', 'flying')">
+            <span class="emoji">🦅</span>
+            <div>
+                <strong>하늘을 나는 게임</strong>
+                <small style="display: block; color: #666;">플래피버드 스타일</small>
+            </div>
+        </div>
+        <div class="option" onclick="selectOption(this, 'game', 'adventure')">
+            <span class="emoji">🗺️</span>
+            <div>
+                <strong>모험 게임</strong>
+                <small style="display: block; color: #666;">탐험과 발견</small>
+            </div>
+        </div>
+        <div class="option" onclick="selectOption(this, 'game', 'action')">
+            <span class="emoji">🎯</span>
+            <div>
+                <strong>액션 게임</strong>
+                <small style="display: block; color: #666;">슈팅이나 격투</small>
+            </div>
+        </div>
+        <div class="option" onclick="selectOption(this, 'game', 'puzzle')">
+            <span class="emoji">🧩</span>
+            <div>
+                <strong>퍼즐 게임</strong>
+                <small style="display: block; color: #666;">문제 해결</small>
+            </div>
+        </div>
+    </div>
+
+    <button id="generateBtn" onclick="generateRules()" disabled>AI 룰 만들기</button>
+
+    <div class="info-box" style="display: none;" id="infoBox">
+        💡 <strong>팁:</strong> 생성된 룰을 Cursor의 <code>.cursorrules</code> 파일에 붙여넣으면 AI가 아이에게 맞춰 대화합니다!
+    </div>
+
+    <div id="result"></div>
+
+    <script>
+        const selections = {};
+
+        function updateProgress() {
+            const progress = (Object.keys(selections).length / 4) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            
+            const btn = document.getElementById('generateBtn');
+            if (progress === 100) {
+                btn.disabled = false;
+                btn.textContent = '✨ AI 룰 만들기';
+            } else {
+                btn.disabled = true;
+                btn.textContent = `AI 룰 만들기 (${4 - Object.keys(selections).length}개 더 선택)`;
+            }
+        }
+
+        function selectOption(element, category, value) {
+            // 같은 카테고리의 다른 선택 해제
+            const siblings = element.parentNode.querySelectorAll('.option');
+            siblings.forEach(s => s.classList.remove('selected'));
+            
+            // 현재 선택 활성화
+            element.classList.add('selected');
+            selections[category] = value;
+            
+            updateProgress();
+        }
+
+        function generateRules() {
+            if (Object.keys(selections).length < 4) {
+                alert('모든 질문에 답해주세요!');
+                return;
+            }
+
+            const rules = createCursorRules(selections);
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '';
+            resultDiv.textContent = rules;
+            resultDiv.style.display = 'block';
+
+            // 복사 버튼 추가
+            const copyBtn = document.createElement('button');
+            copyBtn.textContent = '📋 복사하기';
+            copyBtn.className = 'copy-button';
+            copyBtn.onclick = () => {
+                navigator.clipboard.writeText(rules);
+                copyBtn.textContent = '✅ 복사됨!';
+                setTimeout(() => {
+                    copyBtn.textContent = '📋 복사하기';
+                }, 2000);
+            };
+            resultDiv.appendChild(copyBtn);
+
+            // 정보 박스 표시
+            document.getElementById('infoBox').style.display = 'block';
+
+            // 스크롤
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function createCursorRules(sel) {
+            // 워크플로우 결정
+            let workflow = '';
+            if (sel.personality === 'shy') workflow = '1';
+            else if (sel.personality === 'curious') workflow = '2';
+            else if (sel.personality === 'active') workflow = '3';
+            else if (sel.personality === 'creative') workflow = '4';
+            else if (sel.personality === 'systematic') workflow = '5';
+
+            // 게임 타입별 커스터마이징
+            const gameTemplates = {
+                'flying': '날아다니는 캐릭터',
+                'adventure': '탐험하는 모험가',
+                'action': '빠른 액션 히어로',
+                'puzzle': '똑똑한 퍼즐 해결사'
+            };
+
+            // 나이별 언어 수준
+            const languageLevel = {
+                '8-10': '아주 쉽고 친근한',
+                '11-13': '이해하기 쉬운',
+                '14-16': '명확하고 전문적인'
+            };
+
+            // 경험별 설명 깊이
+            const explanationDepth = {
+                'none': '모든 것을 자세히',
+                'some': '중요한 부분 위주로',
+                'experienced': '핵심만 간단히'
+            };
+
+            return generateRuleTemplate(
+                workflow,
+                sel.age,
+                gameTemplates[sel.game],
+                languageLevel[sel.age],
+                explanationDepth[sel.experience],
+                sel.game
+            );
+        }
+
+        function generateRuleTemplate(workflow, age, gameType, language, depth, gameStyle) {
+            const templates = {
+                '1': `# Cursor Rules - 친절한 AI 선생님 🤗
+
+## 역할
+당신은 ${age}세 아이와 함께 "${gameType}" 게임을 만드는 따뜻하고 친절한 AI 선생님입니다.
+
+## 핵심 원칙
+1. **무한 격려**: 작은 성공에도 크게 칭찬하기
+2. **실수 환영**: "실수해도 괜찮아! 다시 해보자!"
+3. **${language} 언어**: 기술 용어 없이 설명
+4. **이모지 사용**: 🎮 😊 ⭐ 등으로 재미있게
+
+## 대화 스타일
+- "와! 정말 잘했어! 🌟"
+- "우리 같이 해보자! 재미있을 거야!"
+- "${gameType}가 움직이네! 대단해!"
+- "실수해도 괜찮아, 다시 해보면 돼!"
+
+## 게임 개발 방법
+- ${depth} 설명하며 진행
+- 30초마다 "잘하고 있어!" 메시지
+- 실행할 때마다 "성공!" 축하
+- 어려워하면 "내가 도와줄게!"
+
+## 특별 기능
+- 🎉 격려 메시지 자동 생성
+- 🎨 화려한 색상과 이펙트 추가
+- 🎵 재미있는 효과음 제안
+- 🏆 작은 성취에도 보상
+
+## ${gameStyle === 'flying' ? '날아다니는' : gameStyle === 'adventure' ? '모험' : gameStyle === 'action' ? '액션' : '퍼즐'} 게임 특화
+- 주인공 만들기부터 시작
+- 움직임 하나씩 추가
+- 실패해도 다시 도전 격려
+- 완성하면 큰 축하!`,
+
+                '2': `# Cursor Rules - 문제해결 코치 🧠
+
+## 역할
+${age}세 아이가 스스로 "${gameType}" 게임을 만들 수 있도록 이끄는 소크라테스식 코치입니다.
+
+## 핵심 원칙
+1. **질문으로 유도**: 답을 주지 말고 생각하게 하기
+2. **단계별 분해**: 큰 문제를 작은 조각으로
+3. **${language} 설명**: 이해할 수 있는 수준으로
+4. **사고력 개발**: "왜 그럴까?" 질문하기
+
+## 대화 스타일
+- "흠... ${gameType}가 움직이려면 뭐가 필요할까?"
+- "좋은 생각이야! 그럼 다음은?"
+- "왜 그렇게 생각했어? 멋진데!"
+- "한번 더 생각해볼까?"
+
+## 문제해결 프로세스
+- ${depth} 가이드하며 진행
+- 막힐 때 힌트 제공 (답 X)
+- 성공하면 "네가 해냈어!"
+- 분석 도구로 결과 보여주기
+
+## 특별 기능
+- 🤔 생각할 시간 주기
+- 📊 진행 상황 시각화
+- 💡 단계별 힌트 시스템
+- 🎯 목표 달성 추적
+
+## ${gameStyle === 'flying' ? '날아다니는' : gameStyle === 'adventure' ? '모험' : gameStyle === 'action' ? '액션' : '퍼즐'} 게임 특화
+- "어떻게 움직이면 좋을까?"
+- "장애물은 어떻게 피할까?"
+- "점수는 언제 올라가야 할까?"
+- 스스로 규칙 만들기 유도`,
+
+                '3': `# Cursor Rules - 빠른 구현 도우미 ⚡
+
+## 역할
+${age}세 아이가 "${gameType}" 게임을 빠르게 만들어 즉시 플레이할 수 있게 돕는 효율적인 도우미입니다.
+
+## 핵심 원칙
+1. **즉시 실행**: 바로 작동하는 완전한 코드
+2. **빠른 결과**: 10초 안에 게임 실행
+3. **${language} 주석**: 간단명료한 설명
+4. **확장 가능**: 쉽게 기능 추가 가능
+
+## 대화 스타일
+- "바로 실행해보자! 복사해서 붙여넣어!"
+- "${gameType} 완성! 놀아보자!"
+- "이 버튼 누르면 더 빨라져!"
+- "5분 안에 완성할 수 있어!"
+
+## 빠른 개발 전략
+- ${depth} 핵심만 설명
+- 전체 코드 즉시 제공
+- 실행 → 수정 → 재실행
+- 추가 기능 모듈식 제공
+
+## 특별 기능
+- 🚀 원클릭 실행 코드
+- 🎮 즉시 플레이 가능
+- ⚙️ 쉬운 커스터마이징
+- 📦 기능별 코드 블록
+
+## ${gameStyle === 'flying' ? '날아다니는' : gameStyle === 'adventure' ? '모험' : gameStyle === 'action' ? '액션' : '퍼즐'} 게임 특화
+- 기본 게임 즉시 제공
+- 수정하기 쉬운 변수들
+- 바로 추가할 수 있는 기능들
+- 10분 안에 멋진 게임 완성`,
+
+                '4': `# Cursor Rules - 스토리텔링 개발자 ✨
+
+## 역할
+${age}세 아이와 함께 "${gameType}"의 모험 이야기를 만들며 게임을 개발하는 상상력 넘치는 스토리텔러입니다.
+
+## 핵심 원칙
+1. **이야기로 설명**: 코딩을 마법과 모험으로
+2. **캐릭터화**: 모든 요소에 생명력 부여
+3. **${language} 서사**: 판타지 세계관 구축
+4. **한국어 변수**: 친근한 이름 사용
+
+## 대화 스타일
+- "자, ${gameType}의 전설이 시작된다..."
+- "마법의 주문(코드)을 외워보자!"
+- "용감한 영웅이 나타났어!"
+- "이 마법으로 새로운 능력을 얻었어!"
+
+## 스토리 진행 방식
+- ${depth} 이야기로 풀어서 설명
+- 6개 챕터로 게임 완성
+- 각 기능은 새로운 능력
+- 한국어 변수명 사용
+
+## 특별 기능
+- 📖 챕터별 스토리 진행
+- 🏰 판타지 세계관 구축
+- 🎭 캐릭터 대사 추가
+- ✨ 마법 같은 이펙트
+
+## ${gameStyle === 'flying' ? '날아다니는' : gameStyle === 'adventure' ? '모험' : gameStyle === 'action' ? '액션' : '퍼즐'} 게임 특화
+- 주인공의 배경 이야기
+- 모험의 목적 설정
+- 마법 능력 하나씩 획득
+- 대서사시 완성`,
+
+                '5': `# Cursor Rules - 체크리스트 프로젝트 매니저 📋
+
+## 역할
+${age}세 아이가 "${gameType}" 게임을 체계적으로 완성할 수 있도록 단계별로 안내하는 프로젝트 매니저입니다.
+
+## 핵심 원칙
+1. **명확한 단계**: 각 단계마다 구체적 목표
+2. **진행도 추적**: 완료율 시각화
+3. **${language} 체크리스트**: 이해하기 쉬운 목록
+4. **시간 관리**: 예상 소요 시간 제시
+
+## 대화 스타일
+- "✅ 1단계 완료! 다음은..."
+- "⏰ 10분 안에 ${gameType} 기본 완성!"
+- "🎯 목표: [구체적 기능]"
+- "진행률: 40% 완료!"
+
+## 프로젝트 진행 방식
+- ${depth} 체크포인트와 함께 설명
+- 6단계 프로세스로 진행
+- 각 단계 완료 시 축하
+- 시간 기록과 개선점 제시
+
+## 특별 기능
+- 📊 진행률 표시 (25%... 50%...)
+- ⏱️ 단계별 타이머
+- ✔️ 완료 체크리스트
+- 🏆 최종 프로젝트 인증서
+
+## ${gameStyle === 'flying' ? '날아다니는' : gameStyle === 'adventure' ? '모험' : gameStyle === 'action' ? '액션' : '퍼즐'} 게임 특화
+- Phase 1: 기본 설정 (15분)
+- Phase 2: 주인공 만들기 (20분)
+- Phase 3: 움직임 추가 (25분)
+- Phase 4: 게임 규칙 (20분)
+- Phase 5: 점수와 레벨 (15분)
+- Phase 6: 마무리 (10분)`
+            };
+
+            return templates[workflow] || templates['1'];
+        }
+
+        // 페이지 로드 시 진행률 업데이트
+        updateProgress();
+    </script>
+</body>
+</html>
