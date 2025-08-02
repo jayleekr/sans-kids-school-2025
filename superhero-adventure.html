@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🦸‍♂️ 슈퍼히어로 액션 어드벤처</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .game-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 20px;
+            max-width: 900px;
+            width: 95%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .game-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 10px 0;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .stat {
+            background: #f8f9fa;
+            padding: 8px 15px;
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+        }
+        
+        #gameCanvas {
+            border: 3px solid #2c3e50;
+            border-radius: 10px;
+            background: linear-gradient(to bottom, #87ceeb 0%, #90ee90 70%, #654321 100%);
+            margin: 10px 0;
+        }
+        
+        .controls {
+            background: rgba(52, 73, 94, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        
+        .story-text {
+            font-size: 16px;
+            line-height: 1.4;
+            margin: 15px 0;
+            color: #333;
+            min-height: 60px;
+            max-height: 100px;
+            overflow-y: auto;
+        }
+        
+        .choices {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+            justify-content: center;
+        }
+        
+        .choice-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a5a);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .choice-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(238, 90, 90, 0.3);
+        }
+        
+        .choice-btn.blue {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+        }
+        
+        .choice-btn.purple {
+            background: linear-gradient(45deg, #a8edea, #fed6e3);
+            color: #333;
+        }
+        
+        .restart-btn {
+            background: linear-gradient(45deg, #ffeaa7, #fdcb6e);
+            color: #333;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        
+        .mode-indicator {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1 class="game-title">🦸‍♂️ 슈퍼히어로 액션 어드벤처</h1>
+        
+        <div class="stats">
+            <div class="stat">❤️ 체력: <span id="health">100</span></div>
+            <div class="stat">⚡ 파워: <span id="power">100</span></div>
+            <div class="stat">🏆 점수: <span id="score">0</span></div>
+            <div class="stat">🤖 적 처치: <span id="enemies">0</span></div>
+        </div>
+        
+        <div style="position: relative;">
+            <canvas id="gameCanvas" width="800" height="400"></canvas>
+            <div class="mode-indicator" id="modeIndicator">🎬 스토리 모드</div>
+        </div>
+        
+        <div class="controls">
+            <strong>조작법:</strong> 
+            ⬅️➡️⬆️⬇️ 이동 | 
+            <strong>스페이스바</strong> 공격 | 
+            <strong>마우스 클릭</strong> 목표 설정 | 
+            <strong>R키</strong> 스킬
+        </div>
+        
+        <div class="story-text" id="storyText">
+            로딩 중...
+        </div>
+        
+        <div class="choices" id="choices">
+            <!-- 선택지들이 여기에 동적으로 추가됩니다 -->
+        </div>
+        
+        <button class="restart-btn" onclick="startGame()" style="display: none;" id="restartBtn">
+            🔄 다시 시작하기
+        </button>
+    </div>
+
+    <script>
+        // Canvas 및 Context
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // 게임 상태
+        let gameState = {
+            health: 100,
+            power: 100,
+            score: 0,
+            enemiesKilled: 0,
+            currentScene: 'start',
+            mode: 'story', // 'story' 또는 'action'
+            gameTime: 0
+        };
+        
+        // 플레이어 객체
+        let player = {
+            x: 100,
+            y: 300,
+            width: 40,
+            height: 40,
+            speed: 5,
+            color: '#ff6b6b',
+            targetX: 100,
+            targetY: 300,
+            lastAttack: 0
+        };
+        
+        // 게임 객체들
+        let enemies = [];
+        let projectiles = [];
+        let powerUps = [];
+        let particles = [];
+        
+        // 입력 처리
+        let keys = {};
+        let mousePos = { x: 0, y: 0 };
+        
+        // 키보드 이벤트
+        document.addEventListener('keydown', (e) => {
+            keys[e.key.toLowerCase()] = true;
+            
+            // 스페이스바 공격
+            if (e.key === ' ' && gameState.mode === 'action') {
+                e.preventDefault();
+                shootProjectile();
+            }
+            
+            // R키 스킬
+            if (e.key.toLowerCase() === 'r' && gameState.mode === 'action') {
+                useSkill();
+            }
+        });
+        
+        document.addEventListener('keyup', (e) => {
+            keys[e.key.toLowerCase()] = false;
+        });
+        
+        // 마우스 이벤트
+        canvas.addEventListener('click', (e) => {
+            if (gameState.mode === 'action') {
+                const rect = canvas.getBoundingClientRect();
+                mousePos.x = e.clientX - rect.left;
+                mousePos.y = e.clientY - rect.top;
+                player.targetX = mousePos.x - player.width / 2;
+                player.targetY = mousePos.y - player.height / 2;
+            }
+        });
+        
+        // 적 생성
+        function createEnemy() {
+            return {
+                x: canvas.width + 20,
+                y: Math.random() * (canvas.height - 100) + 50,
+                width: 30,
+                height: 30,
+                speed: 2 + Math.random() * 2,
+                color: '#8b4513',
+                health: 3,
+                type: Math.random() > 0.7 ? 'boss' : 'normal'
+            };
+        }
+        
+        // 투사체 발사
+        function shootProjectile() {
+            const now = Date.now();
+            if (now - player.lastAttack > 200 && gameState.power > 5) { // 0.2초 쿨다운
+                projectiles.push({
+                    x: player.x + player.width,
+                    y: player.y + player.height / 2,
+                    width: 15,
+                    height: 5,
+                    speed: 8,
+                    color: '#ffff00'
+                });
+                gameState.power -= 5;
+                player.lastAttack = now;
+            }
+        }
+        
+        // 스킬 사용
+        function useSkill() {
+            if (gameState.power >= 30) {
+                // 전체 화면 공격
+                for (let i = 0; i < 8; i++) {
+                    projectiles.push({
+                        x: player.x + player.width / 2,
+                        y: player.y + player.height / 2,
+                        width: 10,
+                        height: 10,
+                        speed: 6,
+                        color: '#ff00ff',
+                        angle: (i * Math.PI * 2) / 8,
+                        isSkill: true
+                    });
+                }
+                gameState.power -= 30;
+                gameState.score += 20;
+            }
+        }
+        
+        // 파티클 생성
+        function createParticle(x, y, color) {
+            for (let i = 0; i < 5; i++) {
+                particles.push({
+                    x: x,
+                    y: y,
+                    vx: (Math.random() - 0.5) * 4,
+                    vy: (Math.random() - 0.5) * 4,
+                    life: 30,
+                    color: color
+                });
+            }
+        }
+        
+        // 게임 업데이트
+        function updateGame() {
+            if (gameState.mode !== 'action') return;
+            
+            gameState.gameTime++;
+            
+            // 플레이어 이동 (키보드)
+            if (keys['arrowleft'] || keys['a']) {
+                player.x = Math.max(0, player.x - player.speed);
+            }
+            if (keys['arrowright'] || keys['d']) {
+                player.x = Math.min(canvas.width - player.width, player.x + player.speed);
+            }
+            if (keys['arrowup'] || keys['w']) {
+                player.y = Math.max(0, player.y - player.speed);
+            }
+            if (keys['arrowdown'] || keys['s']) {
+                player.y = Math.min(canvas.height - player.height, player.y + player.speed);
+            }
+            
+            // 마우스 목표로 이동 (부드럽게)
+            const dx = player.targetX - player.x;
+            const dy = player.targetY - player.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            
+            if (distance > 3) {
+                player.x += (dx / distance) * 2;
+                player.y += (dy / distance) * 2;
+            }
+            
+            // 적 스폰
+            if (Math.random() < 0.02) {
+                enemies.push(createEnemy());
+            }
+            
+            // 적 업데이트
+            enemies.forEach((enemy, enemyIndex) => {
+                enemy.x -= enemy.speed;
+                
+                // 플레이어 추적
+                const dx = player.x - enemy.x;
+                const dy = player.y - enemy.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                if (distance > 0) {
+                    enemy.x += (dx / distance) * 0.5;
+                    enemy.y += (dy / distance) * 0.5;
+                }
+                
+                // 화면 밖으로 나가면 제거
+                if (enemy.x < -50) {
+                    enemies.splice(enemyIndex, 1);
+                }
+                
+                // 플레이어와 충돌
+                if (distance < 30) {
+                    gameState.health -= 5;
+                    enemies.splice(enemyIndex, 1);
+                    createParticle(enemy.x, enemy.y, '#ff0000');
+                }
+            });
+            
+            // 투사체 업데이트
+            projectiles.forEach((proj, projIndex) => {
+                if (proj.isSkill) {
+                    proj.x += Math.cos(proj.angle) * proj.speed;
+                    proj.y += Math.sin(proj.angle) * proj.speed;
+                } else {
+                    proj.x += proj.speed;
+                }
+                
+                // 화면 밖으로 나가면 제거
+                if (proj.x > canvas.width || proj.x < 0 || proj.y > canvas.height || proj.y < 0) {
+                    projectiles.splice(projIndex, 1);
+                    return;
+                }
+                
+                // 적과 충돌 체크
+                enemies.forEach((enemy, enemyIndex) => {
+                    const dx = proj.x - enemy.x;
+                    const dy = proj.y - enemy.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 25) {
+                        enemy.health--;
+                        projectiles.splice(projIndex, 1);
+                        createParticle(enemy.x, enemy.y, '#ffff00');
+                        
+                        if (enemy.health <= 0) {
+                            enemies.splice(enemyIndex, 1);
+                            gameState.score += enemy.type === 'boss' ? 50 : 10;
+                            gameState.enemiesKilled++;
+                            createParticle(enemy.x, enemy.y, '#00ff00');
+                        }
+                    }
+                });
+            });
+            
+            // 파티클 업데이트
+            particles.forEach((particle, index) => {
+                particle.x += particle.vx;
+                particle.y += particle.vy;
+                particle.life--;
+                
+                if (particle.life <= 0) {
+                    particles.splice(index, 1);
+                }
+            });
+            
+            // 파워 회복
+            if (gameState.power < 100) {
+                gameState.power += 0.2;
+            }
+            
+            // 체력 체크
+            if (gameState.health <= 0) {
+                switchToStoryMode();
+                showScene('game_over');
+            }
+        }
+        
+        // 게임 렌더링
+        function renderGame() {
+            // 배경 클리어
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            if (gameState.mode === 'action') {
+                // 플레이어 그리기
+                ctx.fillStyle = player.color;
+                ctx.fillRect(player.x, player.y, player.width, player.height);
+                
+                // 플레이어 얼굴
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(player.x + 5, player.y + 5, 8, 8);
+                ctx.fillRect(player.x + 25, player.y + 5, 8, 8);
+                
+                // 적들 그리기
+                enemies.forEach(enemy => {
+                    ctx.fillStyle = enemy.type === 'boss' ? '#4a0e4e' : enemy.color;
+                    ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
+                    
+                    // 적 체력 표시
+                    ctx.fillStyle = '#ff0000';
+                    ctx.fillRect(enemy.x, enemy.y - 8, (enemy.width * enemy.health) / 3, 4);
+                });
+                
+                // 투사체 그리기
+                projectiles.forEach(proj => {
+                    ctx.fillStyle = proj.color;
+                    ctx.fillRect(proj.x, proj.y, proj.width, proj.height);
+                });
+                
+                // 파티클 그리기
+                particles.forEach(particle => {
+                    ctx.fillStyle = particle.color;
+                    ctx.globalAlpha = particle.life / 30;
+                    ctx.fillRect(particle.x, particle.y, 3, 3);
+                    ctx.globalAlpha = 1;
+                });
+                
+                // 마우스 목표 표시
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(player.targetX + player.width/2, player.targetY + player.height/2, 20, 0, Math.PI * 2);
+                ctx.stroke();
+            } else {
+                // 스토리 모드 시각 효과
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '48px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('🦸‍♂️', canvas.width/2, canvas.height/2);
+            }
+        }
+        
+        // 모드 전환
+        function switchToActionMode() {
+            gameState.mode = 'action';
+            document.getElementById('modeIndicator').textContent = '🎮 액션 모드';
+            document.getElementById('choices').style.display = 'none';
+        }
+        
+        function switchToStoryMode() {
+            gameState.mode = 'story';
+            document.getElementById('modeIndicator').textContent = '🎬 스토리 모드';
+            document.getElementById('choices').style.display = 'flex';
+        }
+        
+        // 스토리 시나리오 (수정됨)
+        const storyScenes = {
+            start: {
+                text: "🌃 평화로운 도시에 갑자기 거대한 로봇들이 나타났습니다! 시민들이 위험에 처했어요. 당신은 이 도시의 슈퍼히어로입니다. 어떻게 하시겠어요?",
+                choices: [
+                    { text: "⚔️ 즉시 전투 모드로 들어간다", action: "action", next: "action_mode" },
+                    { text: "🕵️ 먼저 상황을 파악한다", action: "observe", next: "analyze_situation" },
+                    { text: "🚁 시민들을 먼저 대피시킨다", action: "rescue", next: "rescue_citizens" }
+                ]
+            },
+            
+            action_mode: {
+                text: "⚔️ 전투 준비 완료! 로봇들이 다가오고 있습니다. 방향키로 이동하고 스페이스바로 공격하세요! 마우스 클릭으로 목표를 설정할 수 있습니다.",
+                choices: [
+                    { text: "🎮 전투 시작!", action: "start_action", next: "combat" }
+                ]
+            },
+            
+            combat: {
+                text: "전투 중... 적을 10마리 처치하면 다음 단계로!",
+                isActionMode: true
+            },
+            
+            analyze_situation: {
+                text: "🔍 관찰 결과, 로봇들의 약점을 발견했습니다! 공격력이 2배 증가합니다!",
+                choices: [
+                    { text: "💪 강화된 능력으로 전투한다", action: "enhanced_combat", next: "action_mode", power: 50 },
+                    { text: "🧠 전략적으로 접근한다", action: "strategy", next: "strategic_combat" }
+                ]
+            },
+            
+            rescue_citizens: {
+                text: "👥 시민들을 안전하게 대피시켰습니다! 감사한 시민들이 당신에게 힘을 빌려줍니다. 체력과 파워가 회복됩니다!",
+                choices: [
+                    { text: "💗 회복된 힘으로 전투한다", action: "full_power", next: "action_mode", health: 100, power: 100 }
+                ]
+            },
+            
+            game_over: {
+                text: "💀 체력이 다 떨어졌습니다! 하지만 진정한 영웅은 포기하지 않습니다!",
+                choices: [
+                    { text: "🔄 다시 도전한다", action: "restart", next: "start" }
+                ]
+            },
+            
+            victory: {
+                text: "🎉 축하합니다! 모든 로봇을 물리치고 도시를 구했습니다! 당신은 진정한 슈퍼히어로입니다!",
+                choices: [
+                    { text: "🔄 새로운 모험을 시작한다", action: "restart", next: "start" }
+                ]
+            }
+        };
+        
+        // 화면 업데이트
+        function updateDisplay() {
+            document.getElementById('health').textContent = Math.max(0, Math.floor(gameState.health));
+            document.getElementById('power').textContent = Math.max(0, Math.floor(gameState.power));
+            document.getElementById('score').textContent = gameState.score;
+            document.getElementById('enemies').textContent = gameState.enemiesKilled;
+        }
+        
+        // 씬 표시
+        function showScene(sceneId) {
+            const scene = storyScenes[sceneId];
+            if (!scene) return;
+            
+            document.getElementById('storyText').textContent = scene.text;
+            
+            if (scene.isActionMode) {
+                switchToActionMode();
+                return;
+            }
+            
+            switchToStoryMode();
+            
+            const choicesDiv = document.getElementById('choices');
+            choicesDiv.innerHTML = '';
+            
+            scene.choices.forEach((choice, index) => {
+                const button = document.createElement('button');
+                button.className = `choice-btn ${index % 3 === 1 ? 'blue' : index % 3 === 2 ? 'purple' : ''}`;
+                button.textContent = choice.text;
+                button.onclick = () => makeChoice(choice);
+                choicesDiv.appendChild(button);
+            });
+        }
+        
+        // 선택하기
+        function makeChoice(choice) {
+            // 스탯 변경
+            if (choice.health) gameState.health = Math.min(100, gameState.health + choice.health);
+            if (choice.power) gameState.power = Math.min(100, gameState.power + choice.power);
+            if (choice.score) gameState.score += choice.score;
+            
+            updateDisplay();
+            
+            // 액션 모드 시작
+            if (choice.action === 'start_action' || choice.action === 'enhanced_combat' || choice.action === 'full_power') {
+                switchToActionMode();
+                return;
+            }
+            
+            // 게임 재시작
+            if (choice.action === 'restart') {
+                startGame();
+                return;
+            }
+            
+            // 다음 씬으로
+            if (choice.next && storyScenes[choice.next]) {
+                setTimeout(() => showScene(choice.next), 1000);
+            }
+        }
+        
+        // 게임 시작
+        function startGame() {
+            gameState = {
+                health: 100,
+                power: 100,
+                score: 0,
+                enemiesKilled: 0,
+                currentScene: 'start',
+                mode: 'story',
+                gameTime: 0
+            };
+            
+            // 게임 객체들 초기화
+            enemies = [];
+            projectiles = [];
+            particles = [];
+            
+            // 플레이어 초기화
+            player = {
+                x: 100,
+                y: 300,
+                width: 40,
+                height: 40,
+                speed: 5,
+                color: '#ff6b6b',
+                targetX: 100,
+                targetY: 300,
+                lastAttack: 0
+            };
+            
+            document.getElementById('restartBtn').style.display = 'none';
+            updateDisplay();
+            showScene('start');
+        }
+        
+        // 게임 루프
+        function gameLoop() {
+            updateGame();
+            renderGame();
+            updateDisplay();
+            
+            // 액션 모드에서 승리 조건 체크
+            if (gameState.mode === 'action' && gameState.enemiesKilled >= 10) {
+                switchToStoryMode();
+                showScene('victory');
+            }
+            
+            requestAnimationFrame(gameLoop);
+        }
+        
+        // 게임 시작
+        startGame();
+        gameLoop();
+    </script>
+</body>
+</html>

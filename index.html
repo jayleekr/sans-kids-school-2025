@@ -288,6 +288,7 @@
             <li><a href="#features">특징</a></li>
             <li><a href="#workflows">교육 방식</a></li>
             <li><a href="#ages">연령별 안내</a></li>
+            <li><a href="#improvements">발전 포인트</a></li>
             <li><a href="ai-rules-generator.html" style="background: var(--primary-color); color: white; padding: 8px 16px; border-radius: 20px;">🎯 AI 맞춤 설정</a></li>
             <li><a href="#demo">데모</a></li>
             <li><a href="https://github.com/jayleekr/sans-kids-school-2025" target="_blank">GitHub</a></li>
@@ -484,22 +485,98 @@
             </div>
         </section>
 
+        <section id="improvements">
+            <h2>🌟 게임 발전시키기</h2>
+            <p style="text-align: center; font-size: 1.1em; margin-bottom: 40px;">
+                기본 게임을 완성했나요? 이제 더 재미있게 만들어봐요!
+            </p>
+            
+            <div style="background: #f0f8ff; padding: 40px; border-radius: 15px; margin: 30px 0;">
+                <h3 style="text-align: center; margin-bottom: 30px;">🎯 발전 포인트 예시</h3>
+                
+                <div class="features">
+                    <div class="feature-card">
+                        <h4>🎨 시각적 개선</h4>
+                        <ul style="text-align: left;">
+                            <li>배경에 구름 추가하기</li>
+                            <li>캐릭터 크기 조절하기</li>
+                            <li>반짝이는 효과 넣기</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>🎮 게임플레이</h4>
+                        <ul style="text-align: left;">
+                            <li>파워업 아이템 추가</li>
+                            <li>보스 캐릭터 만들기</li>
+                            <li>스테이지 시스템</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>🏆 도전 과제</h4>
+                        <ul style="text-align: left;">
+                            <li>업적 시스템 추가</li>
+                            <li>최고 점수 기록</li>
+                            <li>숨겨진 비밀 찾기</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>👥 소셜 기능</h4>
+                        <ul style="text-align: left;">
+                            <li>친구와 함께 플레이</li>
+                            <li>점수 공유하기</li>
+                            <li>협동 모드 추가</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <p style="text-align: center; margin-top: 30px; font-size: 1.1em;">
+                    <strong>💡 팁:</strong> AI에게 "파워업 아이템을 추가하고 싶어!" 라고 말해보세요
+                </p>
+            </div>
+        </section>
+
         <section style="text-align: center; padding: 60px 0;">
             <h2>🚀 지금 시작하세요!</h2>
             <p style="font-size: 1.2em; margin-bottom: 30px;">
                 AI와 함께하는 신나는 게임 개발의 세계로 초대합니다
             </p>
-            <a href="https://github.com/jayleekr/sans-kids-school-2025" class="demo-button" style="font-size: 1.2em; padding: 15px 40px;">
-                GitHub에서 시작하기
+            
+            <div style="background: #fffacd; padding: 30px; border-radius: 15px; margin: 30px auto; max-width: 800px;">
+                <h3 style="color: var(--primary-color); margin-bottom: 20px;">⚡ One-Line 자동 시작</h3>
+                <p style="margin-bottom: 15px;">복사해서 붙여넣기만 하면 끝!</p>
+                
+                <div style="background: #333; color: #fff; padding: 15px; border-radius: 10px; text-align: left; margin: 10px 0; font-family: monospace;">
+                    <strong>Windows (PowerShell):</strong><br>
+                    <code style="font-size: 0.9em; word-break: break-all;">
+                    $tag = (Invoke-RestMethod -Uri "https://api.github.com/repos/jayleekr/sans-kids-school-2025/releases/latest").tag_name; $url = "https://github.com/jayleekr/sans-kids-school-2025/releases/download/$tag/VibeCoding-$tag.zip"; Invoke-WebRequest -Uri $url -OutFile "$env:TEMP\vibe.zip"; Expand-Archive -Path "$env:TEMP\vibe.zip" -DestinationPath "$env:USERPROFILE\Desktop\VibeCoding" -Force; Start-Process explorer "$env:USERPROFILE\Desktop\VibeCoding"
+                    </code>
+                </div>
+                
+                <div style="background: #333; color: #fff; padding: 15px; border-radius: 10px; text-align: left; margin: 10px 0; font-family: monospace;">
+                    <strong>Mac/Linux (Terminal):</strong><br>
+                    <code style="font-size: 0.9em; word-break: break-all;">
+                    curl -L $(curl -s https://api.github.com/repos/jayleekr/sans-kids-school-2025/releases/latest | grep browser_download_url | cut -d '"' -f 4) -o /tmp/vibe.zip && unzip -o /tmp/vibe.zip -d ~/Desktop/VibeCoding && open ~/Desktop/VibeCoding
+                    </code>
+                </div>
+            </div>
+            
+            <a href="https://github.com/jayleekr/sans-kids-school-2025/releases/latest" class="demo-button" style="font-size: 1.2em; padding: 15px 40px; margin: 10px;">
+                📦 최신 Release 다운로드
+            </a>
+            <a href="https://github.com/jayleekr/sans-kids-school-2025" class="demo-button" style="font-size: 1.2em; padding: 15px 40px; margin: 10px; background: var(--secondary-color);">
+                🐙 GitHub 저장소
             </a>
         </section>
     </main>
 
     <footer>
         <div class="container">
-            <p>© 2025 SANS Kids VibeCoding</p>
+            <p>© 2025 SANS Kids VibeCoding | v1.1.2</p>
             <p>Contributors: Jay Lee, Jinyong Shin, Jiwoong Kim</p>
-            <p><a href="https://github.com/jayleekr/sans-kids-school-2025">GitHub Repository</a></p>
+            <p><a href="https://github.com/jayleekr/sans-kids-school-2025">GitHub Repository</a> | <a href="https://github.com/jayleekr/sans-kids-school-2025/releases">Releases</a></p>
         </div>
     </footer>
 
