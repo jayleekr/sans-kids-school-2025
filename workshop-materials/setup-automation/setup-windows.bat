@@ -19,7 +19,7 @@ if %errorLevel% == 0 (
 
 :: 1. 프로젝트 디렉토리 설정
 echo.
-echo [1/8] 📁 프로젝트 디렉토리 설정 중...
+echo [1/6] 📁 프로젝트 디렉토리 설정 중...
 :: 스크립트가 있는 디렉토리로 이동 (프로젝트 루트)
 cd /d "%~dp0"
 cd ..\..
@@ -29,7 +29,7 @@ echo ✅ 디렉토리 설정 완료!
 
 :: 2. Cursor 설치 확인
 echo.
-echo [2/8] 🔍 Cursor 설치 확인 중...
+echo [2/6] 🔍 Cursor 설치 확인 중...
 where cursor >nul 2>&1
 if %errorLevel% == 0 (
     echo ✅ Cursor가 설치되어 있습니다!
@@ -42,7 +42,7 @@ if %errorLevel% == 0 (
 
 :: 3. Chrome 설치 확인
 echo.
-echo [3/8] 🔍 Chrome 브라우저 확인 중...
+echo [3/6] 🔍 Chrome 브라우저 확인 중...
 if exist "%ProgramFiles%\Google\Chrome\Application\chrome.exe" (
     echo ✅ Chrome이 설치되어 있습니다!
 ) else if exist "%ProgramFiles(x86)%\Google\Chrome\Application\chrome.exe" (
@@ -54,7 +54,7 @@ if exist "%ProgramFiles%\Google\Chrome\Application\chrome.exe" (
 
 :: 4. Node.js 설치 확인 및 Live Server 준비
 echo.
-echo [4/8] 🟢 Node.js 설치 확인 중...
+echo [4/6] 🟢 Node.js 설치 확인 중...
 
 :: Node.js 설치 확인
 node --version >nul 2>&1
@@ -70,53 +70,9 @@ if %errorLevel% == 0 (
     exit
 )
 
-:: 5. Live Server 설치 (전역)
-echo.
-echo [5/8] 🌐 Live Server 설치 중...
-npm list -g live-server >nul 2>&1
-if %errorLevel% == 0 (
-    echo ✅ Live Server가 이미 설치되어 있습니다!
-) else (
-    echo 📦 Live Server 설치 중... (몇 분 소요될 수 있습니다)
-    npm install -g live-server
-    if %errorLevel% == 0 (
-        echo ✅ Live Server 설치 완료!
-    ) else (
-        echo ❌ Live Server 설치 실패. 수동 설치가 필요할 수 있습니다.
-    )
-)
-
-echo ✅ Live Server 설치 체크 완료!
-
-echo ✅ MCP 설정 준비 완료!
-
-:: 6. MCP 서버 설치 (Playwright)
-echo.
-echo [6/8] 🤖 MCP 서버 설치 중...
-
-:: Node.js 설치 확인
-node --version >nul 2>&1
-if %errorLevel% == 0 (
-    echo ✅ Node.js가 설치되어 있습니다!
-    
-    :: MCP Playwright 서버 설치
-    echo 📦 MCP Playwright 서버 설치 중...
-    npm install -g @playwright/mcp@latest
-    
-    if %errorLevel% == 0 (
-        echo ✅ MCP Playwright 서버 설치 완료!
-    ) else (
-        echo ⚠️  MCP 서버 설치 실패. 수동 설치가 필요할 수 있습니다.
-    )
-) else (
-    echo ⚠️  Node.js가 설치되지 않았습니다.
-    echo    https://nodejs.org 에서 다운로드하세요.
-    start https://nodejs.org
-)
-
 :: 7. Cursor MCP 설정 (프로젝트별)
 echo.
-echo [7/8] ⚙️  Cursor MCP 설정 중...
+echo [5/6] ⚙️  Cursor MCP 설정 중...
 
 :: 프로젝트 루트의 .cursor 디렉토리에 MCP 설정 파일 생성
 cd /d "%PROJECT_DIR%"
@@ -140,7 +96,7 @@ echo ✅ 프로젝트별 Cursor MCP 설정 완료!
 
 :: 8. Cursor Rules 복사
 echo.
-echo [8/8] 📋 Cursor Rules 설정 중...
+echo [6/6] 📋 Cursor Rules 설정 중...
 
 :: .cursor\rules 디렉토리 생성
 if not exist ".cursor\rules" mkdir .cursor\rules
